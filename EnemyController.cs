@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
     }
     void Die()
     {
+        speed = 0;
         myAnim.Play("DeathEffect");
         Destroy(gameObject, 0.6f);
     }

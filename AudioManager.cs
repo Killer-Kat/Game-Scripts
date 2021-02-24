@@ -32,6 +32,10 @@ public class AudioManager : MonoBehaviour
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
 	}
+	void Start ()
+    {
+		Play("BackGround Music"); //Temp until multi levels are added
+    }
 
 	public void Play(string sound)
 	{
