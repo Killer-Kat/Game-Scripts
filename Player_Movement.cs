@@ -12,6 +12,7 @@ public class Player_Movement : MonoBehaviour
     private float attackTime = 1f;
     private float attackCounter = 1f;
     private bool isAttacking;
+    public int damage = 10;
     public Transform firePoint;
     public GameObject Arrow;
     public Vector2 lastMove;

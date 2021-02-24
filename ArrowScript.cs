@@ -24,7 +24,7 @@ public class ArrowScript : MonoBehaviour
         EnemyController enemy = hitInfo.GetComponent<EnemyController>();
         if (enemy != null)
         {
-            enemy.TakeDamage(10);
+            enemy.TakeDamage(playerMan.damage);
         }
         Destroy(gameObject);
     }
