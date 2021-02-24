@@ -10,10 +10,10 @@ public class PlayerStats : MonoBehaviour
     public Text levelText;
     public int currentExp;
     public int baseExp = 1000;
-    [SerializeField]
-    private int[] expToLevelup;
+    public int[] expToLevelup;
     private HealthManager healthMan;
     private Player_Movement playerMan;
+    private UIManager UIMan;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +26,7 @@ public class PlayerStats : MonoBehaviour
         }
         healthMan = FindObjectOfType<HealthManager>();
         playerMan = FindObjectOfType<Player_Movement>();
+        UIMan = FindObjectOfType<UIManager>();
     }
 
     // Update is called once per frame
@@ -52,5 +53,6 @@ public class PlayerStats : MonoBehaviour
             }
         }
         levelText.text = "Level: " + playerLevel;
+        UIMan.expBarUpdate();
     }
 }
