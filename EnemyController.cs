@@ -8,18 +8,23 @@ public class EnemyController : MonoBehaviour
     private Transform target;
     public Transform homePos;
     [SerializeField]
+    private int expValue;
+    [SerializeField]
     private float speed;
     [SerializeField]
     private float maxRange;
     [SerializeField]
     private float minRange;
     public int Health;
+    private PlayerStats pStats;
+    
     // Start is called before the first frame update
     void Start()
     {
         myAnim = GetComponent<Animator>();
         target = FindObjectOfType<Player_Movement>().transform;
-        
+        pStats = FindObjectOfType<PlayerStats>();
+
     }
 
     // Update is called once per frame
@@ -66,5 +71,6 @@ public class EnemyController : MonoBehaviour
         speed = 0;
         myAnim.Play("DeathEffect");
         Destroy(gameObject, 0.6f);
+        pStats.giveExp(expValue);
     }
 }

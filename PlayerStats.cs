@@ -10,7 +10,9 @@ public class PlayerStats : MonoBehaviour
     public Text levelText;
     public int currentExp;
     public int baseExp = 1000;
-    public int[] expToLevelup;
+    [SerializeField]
+    private int[] expToLevelup;
+    private HealthManager healthMan;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,9 @@ public class PlayerStats : MonoBehaviour
         expToLevelup[1] = baseExp;
         for(int i = 2; i < expToLevelup.Length; i++)
         {
-            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.05f);
+            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.25f);
         }
+        healthMan = FindObjectOfType<HealthManager>();
     }
 
     // Update is called once per frame
@@ -35,10 +38,12 @@ public class PlayerStats : MonoBehaviour
     }
     void upDateStats()
     {
-        levelText.text = "Level: " + playerLevel;
-        if (expToLevelup[playerLevel] + expToLevelup[playerLevel + 1] >= currentExp)
+        if (currentExp >= expToLevelup[playerLevel] + expToLevelup[playerLevel + 1])
         {
             playerLevel++;
+            healthMan.maxHealth = healthMan.maxHealth + playerLevel;
+            healthMan.currentHealth = healthMan.maxHealth;
         }
+        levelText.text = "Level: " + playerLevel;
     }
 }
