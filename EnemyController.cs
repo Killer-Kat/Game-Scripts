@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     private float maxRange;
     [SerializeField]
     private float minRange;
+    public int Health;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,5 +52,18 @@ public class EnemyController : MonoBehaviour
         {
             myAnim.SetBool("isMoving", false);
         }
+    }
+    public void TakeDamage (int damage)
+    {
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        myAnim.Play("DeathEffect");
+        Destroy(gameObject, 0.6f);
     }
 }

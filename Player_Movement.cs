@@ -37,9 +37,8 @@ public class Player_Movement : MonoBehaviour
         }
         if (Input.GetAxisRaw("Horizontal") == 0 & Input.GetAxisRaw("Vertical") == 0)
                 {
-            moveSpeed = moveSpeed;
-            //movement.Normalize();
-            //lastMove.Normalize();
+            //Do Nothing!
+            
         }
         else
         {
@@ -56,7 +55,7 @@ public class Player_Movement : MonoBehaviour
                 isAttacking = false;
             }
         }
-        if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetButtonDown("Fire1"))
         {
             attackCounter = attackTime;
             myAnimator.SetBool("IsAttacking", true);
@@ -67,6 +66,7 @@ public class Player_Movement : MonoBehaviour
     {
         if (isAttacking == false)
         {
+            movement.Normalize();
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArrowScript : MonoBehaviour
 {
-    private float speed = 20f;
+    private float speed = 15f;
     public Rigidbody2D ArrowRB;
     private Player_Movement playerMan;
     // Start is called before the first frame update
@@ -19,8 +19,13 @@ public class ArrowScript : MonoBehaviour
     {
         
     }
-    //void OnTriggerEnter2D (Collider2D)
-   // {
-
-    //}
+    void OnTriggerEnter2D (Collider2D hitInfo)
+    {
+        EnemyController enemy = hitInfo.GetComponent<EnemyController>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(10);
+        }
+        Destroy(gameObject);
+    }
 }
