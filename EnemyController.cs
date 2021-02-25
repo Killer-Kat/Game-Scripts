@@ -17,13 +17,15 @@ public class EnemyController : MonoBehaviour
     private float minRange;
     public int Health;
     private PlayerStats pStats;
-    
+    private AudioManager audioMan;
+
     // Start is called before the first frame update
     void Start()
     {
         myAnim = GetComponent<Animator>();
         target = FindObjectOfType<Player_Movement>().transform;
         pStats = FindObjectOfType<PlayerStats>();
+        audioMan = FindObjectOfType<AudioManager>();
 
     }
 
@@ -61,6 +63,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage (int damage)
     {
         Health -= damage;
+        audioMan.Play("HitSound");
         if (Health <= 0)
         {
             Die();

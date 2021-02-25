@@ -22,9 +22,14 @@ public class ArrowScript : MonoBehaviour
     void OnTriggerEnter2D (Collider2D hitInfo)
     {
         EnemyController enemy = hitInfo.GetComponent<EnemyController>();
+        SpawnOnBreak breakable = hitInfo.GetComponent<SpawnOnBreak>();
         if (enemy != null)
         {
             enemy.TakeDamage(playerMan.damage);
+        }
+        if (breakable != null)
+        {
+            breakable.breakAndSpawn();
         }
         Destroy(gameObject);
     }

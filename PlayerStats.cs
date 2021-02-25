@@ -14,6 +14,7 @@ public class PlayerStats : MonoBehaviour
     private HealthManager healthMan;
     private Player_Movement playerMan;
     private UIManager UIMan;
+    private AudioManager audioMan;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerStats : MonoBehaviour
         healthMan = FindObjectOfType<HealthManager>();
         playerMan = FindObjectOfType<Player_Movement>();
         UIMan = FindObjectOfType<UIManager>();
+        audioMan = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -44,6 +46,7 @@ public class PlayerStats : MonoBehaviour
         if (currentExp >= expToLevelup[playerLevel] + expToLevelup[playerLevel + 1])
         {
             playerLevel++;
+            audioMan.Play("LevelUpSound");
             healthMan.maxHealth = healthMan.maxHealth + playerLevel;
             healthMan.currentHealth = healthMan.maxHealth;
             playerMan.damage = playerMan.damage + 1;
