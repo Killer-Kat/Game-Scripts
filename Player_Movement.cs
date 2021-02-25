@@ -16,9 +16,22 @@ public class Player_Movement : MonoBehaviour
     public Transform firePoint;
     public GameObject Arrow;
     public Vector2 lastMove;
+    private GameObject[] players;
 
-
-
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+    private void OnLevelWasLoaded(int level)
+    {
+        FindTransPos();
+        players = GameObject.FindGameObjectsWithTag("Player");
+        
+        if(players.Length > 1)
+        {
+            Destroy(players[1]);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -70,5 +83,9 @@ public class Player_Movement : MonoBehaviour
             movement.Normalize();
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
+    }
+    void FindTransPos()
+    {
+        transform.position = GameObject.FindWithTag("TransPos").transform.position;
     }
 }

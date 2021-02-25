@@ -11,13 +11,25 @@ public class UIManager : MonoBehaviour
     public Text xpText;
     public Slider healthBar;
     public Text hpText;
+    private GameObject[] GUIs;
 
-    // Start is called before the first frame update
+    //This is so that I dont generate multiple GUI's 
+    private void OnLevelWasLoaded(int level)
+    {
+        GUIs = GameObject.FindGameObjectsWithTag("MainGUI");
+
+        if (GUIs.Length > 1)
+        {
+            Destroy(GUIs[1]);
+        }
+    }
+
     void Start()
     {
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
         expBarUpdate();
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
