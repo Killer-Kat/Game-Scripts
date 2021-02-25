@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     private Player_Movement playerMan;
     private UIManager UIMan;
     private AudioManager audioMan;
+    public int currentMoney;
     // Start is called before the first frame update
     void Start()
     {

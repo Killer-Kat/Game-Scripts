@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public Text xpText;
     public Slider healthBar;
     public Text hpText;
+    public Text coinText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
@@ -45,5 +46,9 @@ public class UIManager : MonoBehaviour
         ExpBar.maxValue = ExpForNextLvl;
         ExpBar.value = pStats.currentExp;
         xpText.text = "XP: " + pStats.currentExp + "/" + ExpForNextLvl;
+    }
+    public void coinGUIupdate()
+    {
+    coinText.text = "" + pStats.currentMoney;
     }
 }

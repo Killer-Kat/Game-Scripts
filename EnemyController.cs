@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float minRange;
     public int Health;
+    public int dropChance =75;
+    public GameObject droppedLoot;
     private PlayerStats pStats;
     private AudioManager audioMan;
 
@@ -76,5 +78,12 @@ public class EnemyController : MonoBehaviour
         audioMan.Play("EnemyDeath");
         Destroy(gameObject, 0.6f);
         pStats.giveExp(expValue);
+        
+        int randomValueBetween0And99 = Random.Range(0, 100);
+        if(randomValueBetween0And99 < dropChance)
+        {
+            Instantiate(droppedLoot, transform.position, transform.rotation);
+        }
+
     }
 }
