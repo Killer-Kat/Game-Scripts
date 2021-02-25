@@ -26,6 +26,7 @@ public class SpawnOnBreak : MonoBehaviour
         {
             spriteRenderer.sprite = newSprite;
             Instantiate(enemyToSpawn, spawnPoint.position, spawnPoint.rotation);
+            broken = true;
         }
     }
 }

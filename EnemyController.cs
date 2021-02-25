@@ -73,6 +73,7 @@ public class EnemyController : MonoBehaviour
     {
         speed = 0;
         myAnim.Play("DeathEffect");
+        audioMan.Play("EnemyDeath");
         Destroy(gameObject, 0.6f);
         pStats.giveExp(expValue);
     }
