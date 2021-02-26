@@ -24,7 +24,7 @@ public class PotionPickup : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Potion");
             if (potionType == "HealthPotion")
             {
-                FindObjectOfType<PlayerStats>().currentHealthPotions = FindObjectOfType<PlayerStats>().currentHealthPotions + 1;
+                FindObjectOfType<EXPManager>().currentHealthPotions = FindObjectOfType<EXPManager>().currentHealthPotions + 1;
                 FindObjectOfType<UIManager>().healthPotionGUIupdate();
             }
             Destroy(gameObject);

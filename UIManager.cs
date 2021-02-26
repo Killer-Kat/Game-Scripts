@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private HealthManager healthMan;
-    private PlayerStats pStats;
+    private EXPManager pStats;
     public Slider ExpBar;
     public Text xpText;
     public Slider healthBar;
@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         healthMan = FindObjectOfType<HealthManager>();
-        pStats = FindObjectOfType<PlayerStats>();
+        pStats = FindObjectOfType<EXPManager>();
         Invoke("expBarUpdate", 1);
         DontDestroyOnLoad(gameObject);
     }

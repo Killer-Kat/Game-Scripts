@@ -44,7 +44,7 @@ public class HealthManager : MonoBehaviour
         }
 
         FindObjectOfType<AudioManager>().Play("PotionDrink");
-        FindObjectOfType<PlayerStats>().currentHealthPotions = FindObjectOfType<PlayerStats>().currentHealthPotions - 1;
+        FindObjectOfType<EXPManager>().currentHealthPotions = FindObjectOfType<EXPManager>().currentHealthPotions - 1;
         FindObjectOfType<UIManager>().healthPotionGUIupdate();
     }
 }

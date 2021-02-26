@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public int dropChance =75;
     public GameObject droppedLoot;
-    private PlayerStats pStats;
+    private EXPManager pStats;
     private AudioManager audioMan;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
     {
         myAnim = GetComponent<Animator>();
         target = FindObjectOfType<PlayerController>().transform;
-        pStats = FindObjectOfType<PlayerStats>();
+        pStats = FindObjectOfType<EXPManager>();
         audioMan = FindObjectOfType<AudioManager>();
 
     }

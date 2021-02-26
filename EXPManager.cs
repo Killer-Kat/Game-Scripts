@@ -1,10 +1,9 @@
-﻿//Depricated now using EXPManager & Playerstats 
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStats : MonoBehaviour
+public class EXPManager : MonoBehaviour
 {
     
     public int playerLevel = 1;

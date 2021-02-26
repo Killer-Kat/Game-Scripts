@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("DrinkHealthPotion"))
         {
-            if (healthMan.healthPotionCooldown == false && FindObjectOfType<PlayerStats>().currentHealthPotions > 0)
+            if (healthMan.healthPotionCooldown == false && FindObjectOfType<EXPManager>().currentHealthPotions > 0)
             {
                 healthMan.drinkHealthPotion();
                 Invoke("resetPotionCooldown", 3);
