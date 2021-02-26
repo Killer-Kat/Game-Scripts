@@ -16,6 +16,7 @@ public class Player_Movement : MonoBehaviour
     public Transform firePoint;
     public GameObject Arrow;
     public Vector2 lastMove;
+    public int areaTransitionIndex;
     private GameObject[] players;
 
     void Start()
@@ -86,6 +87,13 @@ public class Player_Movement : MonoBehaviour
     }
     void FindTransPos()
     {
-        transform.position = GameObject.FindWithTag("TransPos").transform.position;
+        if (areaTransitionIndex == 0)
+        {
+            transform.position = GameObject.FindWithTag("TransPos").transform.position;
+        }
+        else if (areaTransitionIndex == 1)
+        {
+            transform.position = GameObject.FindWithTag("TransPos02").transform.position;
+        }
     }
 }

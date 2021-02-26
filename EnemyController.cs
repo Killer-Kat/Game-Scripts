@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
     private float maxRange;
     [SerializeField]
     private float minRange;
+    //[SerializeField]
+    //private int wakeTime = 0;
     public int Health;
     public int dropChance =75;
     public GameObject droppedLoot;
@@ -36,6 +38,7 @@ public class EnemyController : MonoBehaviour
     {
         if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) >= minRange)
         {
+
             FollowPlayer(); //Spoop time
         }
         else if (Vector3.Distance(target.position, transform.position) >= maxRange)

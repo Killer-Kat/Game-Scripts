@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public Slider healthBar;
     public Text hpText;
     public Text coinText;
+    public Text healthPotionText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
@@ -50,5 +51,9 @@ public class UIManager : MonoBehaviour
     public void coinGUIupdate()
     {
     coinText.text = "" + pStats.currentMoney;
+    }
+    public void healthPotionGUIupdate()
+    {
+        healthPotionText.text = "" + pStats.currentHealthPotions;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class AreaTransition : MonoBehaviour
 {
     public int levelToLoad;
+    public int NextAreaTransitionIndex; // Stores a value used to check which exit this transition leads to in the next level.
     public string currentBGM;
     public string nextBGM;
     private AudioManager audioMan;
@@ -30,6 +31,7 @@ public class AreaTransition : MonoBehaviour
     }
     void LoadScene()
     {
+        FindObjectOfType<Player_Movement>().areaTransitionIndex = NextAreaTransitionIndex;
         audioMan.StopPlaying(currentBGM);
         audioMan.Play(nextBGM);
         SceneManager.LoadScene(levelToLoad);
