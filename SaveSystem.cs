@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class SaveSystem {
  
-    public static void SavePlayer (Player_Movement player)
+    public static void SavePlayer (PlayerController player)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.SAVE";

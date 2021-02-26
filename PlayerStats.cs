@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int baseExp = 1000;
     public int[] expToLevelup;
     private HealthManager healthMan;
-    private Player_Movement playerMan;
+    private PlayerController playerMan;
     private UIManager UIMan;
     private AudioManager audioMan;
     public int currentMoney;
@@ -29,7 +29,7 @@ public class PlayerStats : MonoBehaviour
             expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.25f);
         }
         healthMan = FindObjectOfType<HealthManager>();
-        playerMan = FindObjectOfType<Player_Movement>();
+        playerMan = FindObjectOfType<PlayerController>();
         UIMan = FindObjectOfType<UIManager>();
         audioMan = FindObjectOfType<AudioManager>();
     }

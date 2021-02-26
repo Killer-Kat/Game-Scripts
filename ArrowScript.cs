@@ -6,11 +6,11 @@ public class ArrowScript : MonoBehaviour
 {
     private float speed = 15f;
     public Rigidbody2D ArrowRB;
-    private Player_Movement playerMan;
+    private PlayerController playerMan;
     // Start is called before the first frame update
     void Start()
     {
-        playerMan = FindObjectOfType<Player_Movement>();
+        playerMan = FindObjectOfType<PlayerController>();
         ArrowRB.velocity = playerMan.lastMove * speed;
     }
 

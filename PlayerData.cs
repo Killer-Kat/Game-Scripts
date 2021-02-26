@@ -9,7 +9,7 @@ public class PlayerData
     public int health;
     public float[] position;
 
-    public PlayerData (Player_Movement player)
+    public PlayerData (PlayerController player)
     {
         playerLevel = player.playerLevel;
         health = player.health;

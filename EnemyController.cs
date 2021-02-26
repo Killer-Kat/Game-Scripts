@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         myAnim = GetComponent<Animator>();
-        target = FindObjectOfType<Player_Movement>().transform;
+        target = FindObjectOfType<PlayerController>().transform;
         pStats = FindObjectOfType<PlayerStats>();
         audioMan = FindObjectOfType<AudioManager>();
 
