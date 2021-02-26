@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
-
+    public InventoryObject inventory;
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     public Vector2 movement;
@@ -18,17 +18,22 @@ public class Player_Movement : MonoBehaviour
     public Vector2 lastMove;
     public int areaTransitionIndex;
     private GameObject[] players;
+    private HealthManager healthMan;
+
+    public int health = 1; // DOnt use this, its only temporaray before the refactor
+    public int playerLevel = 1; //THis also is only temp
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        healthMan = FindObjectOfType<HealthManager>();
     }
     private void OnLevelWasLoaded(int level)
     {
         FindTransPos();
         players = GameObject.FindGameObjectsWithTag("Player");
-        
-        if(players.Length > 1)
+
+        if (players.Length > 1)
         {
             Destroy(players[1]);
         }
@@ -45,15 +50,15 @@ public class Player_Movement : MonoBehaviour
         myAnimator.SetFloat("Vertical", movement.y);
         myAnimator.SetFloat("Speed", movement.sqrMagnitude);
         //Sets Idle Direction
-        if(Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             myAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             myAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
         if (Input.GetAxisRaw("Horizontal") == 0 & Input.GetAxisRaw("Vertical") == 0)
-                {
+        {
             //Do Nothing!
-            
+
         }
         else
         {
@@ -65,17 +70,40 @@ public class Player_Movement : MonoBehaviour
             attackCounter -= Time.deltaTime;
             if (attackCounter <= 0)
             {
-               Instantiate(Arrow, firePoint.position, firePoint.rotation);
+                Instantiate(Arrow, firePoint.position, firePoint.rotation);
                 myAnimator.SetBool("IsAttacking", false);
                 isAttacking = false;
             }
         }
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             attackCounter = attackTime;
             myAnimator.SetBool("IsAttacking", true);
-                isAttacking = true;
+            isAttacking = true;
         }
+        if (Input.GetButtonDown("DrinkHealthPotion"))
+        {
+            if (healthMan.healthPotionCooldown == false && FindObjectOfType<PlayerStats>().currentHealthPotions > 0)
+            {
+                healthMan.drinkHealthPotion();
+                Invoke("resetPotionCooldown", 3);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            inventory.Save();
+        }if (Input.GetKeyDown(KeyCode.V))
+        {
+            inventory.Load();
+        } if (Input.GetKeyDown(KeyCode.B))
+        {
+            SavePlayer();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            LoadPlayer();
+        }
+
     }
     void FixedUpdate()
     {
@@ -95,5 +123,41 @@ public class Player_Movement : MonoBehaviour
         {
             transform.position = GameObject.FindWithTag("TransPos02").transform.position;
         }
+    }
+    void resetPotionCooldown()
+    {
+        healthMan.healthPotionCooldown = false;
+    }
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        var item = other.GetComponent<Item>();
+
+        if (item)
+        {
+            inventory.AddItem(item.item, 1);
+            Destroy(other.gameObject);
+        }
+    }
+    private void OnApplicationQuit()
+    {
+    inventory.Container.Clear();
+    }
+    public void SavePlayer ()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+    public void LoadPlayer ()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        playerLevel = data.playerLevel;
+        health = data.health;
+
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        transform.position = position;
+
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    
     public int playerLevel = 1;
     public int maxLevel = 100;
     public Text levelText;
@@ -55,6 +56,10 @@ public class PlayerStats : MonoBehaviour
             if(playerLevel % 2 == 0)
             {
                 playerMan.moveSpeed = playerMan.moveSpeed + 0.1f;
+            }
+            if (playerLevel % 10 == 0)
+            {
+                healthMan.playerArmor = healthMan.playerArmor + 1;
             }
         }
         levelText.text = "Level: " + playerLevel;

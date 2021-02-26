@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public Text hpText;
     public Text coinText;
     public Text healthPotionText;
+    public Text armorText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
@@ -30,12 +31,12 @@ public class UIManager : MonoBehaviour
     {
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
-        expBarUpdate();
+        Invoke("expBarUpdate", 1);
         DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() //I know I need to change this, its old code from a tutorial
     {
         healthBar.maxValue = healthMan.maxHealth;
         healthBar.value = healthMan.currentHealth;
@@ -55,5 +56,9 @@ public class UIManager : MonoBehaviour
     public void healthPotionGUIupdate()
     {
         healthPotionText.text = "" + pStats.currentHealthPotions;
+    }
+    public void armorGUIupdate()
+    {
+        armorText.text = "Armor: " + healthMan.playerArmor;
     }
 }

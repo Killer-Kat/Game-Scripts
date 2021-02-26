@@ -21,7 +21,7 @@ public class PotionPickup : MonoBehaviour
 
         if (collisionGameObject.name == "Player")
         {
-            //FindObjectOfType<AudioManager>().Play("Potion");
+            FindObjectOfType<AudioManager>().Play("Potion");
             if (potionType == "HealthPotion")
             {
                 FindObjectOfType<PlayerStats>().currentHealthPotions = FindObjectOfType<PlayerStats>().currentHealthPotions + 1;
