@@ -18,7 +18,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 lastMove;
     public int areaTransitionIndex;
     private GameObject[] players;
+
     private HealthManager healthMan;
+    private PlayerStats pStats;
 
     public int health = 1; // DOnt use this, its only temporaray before the refactor
     public int playerLevel = 1; //THis also is only temp
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         healthMan = FindObjectOfType<HealthManager>();
+        pStats = FindObjectOfType<PlayerStats>();
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("DrinkHealthPotion"))
         {
-            if (healthMan.healthPotionCooldown == false && FindObjectOfType<EXPManager>().currentHealthPotions > 0)
+            if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0)
             {
                 healthMan.drinkHealthPotion();
                 Invoke("resetPotionCooldown", 3);

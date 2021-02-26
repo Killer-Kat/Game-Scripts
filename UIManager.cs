@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private HealthManager healthMan;
-    private EXPManager pStats;
+    private PlayerStats pStats;
+    private EXPManager EXPMan;
+
     public Slider ExpBar;
     public Text xpText;
     public Slider healthBar;
@@ -30,21 +32,27 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         healthMan = FindObjectOfType<HealthManager>();
-        pStats = FindObjectOfType<EXPManager>();
+        pStats = FindObjectOfType<PlayerStats>();
+        EXPMan = FindObjectOfType<EXPManager>();
         Invoke("expBarUpdate", 1);
+        Invoke("HealthBarUpdate", 1);
         DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
     void Update() //I know I need to change this, its old code from a tutorial
     {
+        
+    }
+    public void HealthBarUpdate()
+    {
         healthBar.maxValue = healthMan.maxHealth;
-        healthBar.value = healthMan.currentHealth;
-        hpText.text = "HP: " + healthMan.currentHealth + "/" + healthMan.maxHealth;
+        healthBar.value = pStats.currentHealth;
+        hpText.text = "HP: " + pStats.currentHealth + "/" + healthMan.maxHealth;
     }
     public void expBarUpdate()
     {
-        int ExpForNextLvl = pStats.expToLevelup[pStats.playerLevel] + pStats.expToLevelup[pStats.playerLevel + 1];
+        int ExpForNextLvl = EXPMan.expToLevelup[pStats.playerLevel] + EXPMan.expToLevelup[pStats.playerLevel + 1];
         ExpBar.maxValue = ExpForNextLvl;
         ExpBar.value = pStats.currentExp;
         xpText.text = "XP: " + pStats.currentExp + "/" + ExpForNextLvl;

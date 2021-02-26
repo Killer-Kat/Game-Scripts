@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    public int currentHealth;
-    public int maxHealth;
-    public int playerArmor;
+   
+    public int maxHealth; //m
+    public int playerArmor; //m 
     public int potionHealthAmount = 25; //the amount of health the health potion restores.
     public bool healthPotionCooldown = false;
+
+    private PlayerStats pStats;
+    private UIManager UIMan;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        pStats = FindObjectOfType<PlayerStats>();
+        UIMan = FindObjectOfType<UIManager>();
     }
 
     // Update is called once per frame
@@ -26,26 +30,28 @@ public class HealthManager : MonoBehaviour
         int damageTaken = damageToGive - playerArmor;
         if (damageTaken > 0)
         {
-            currentHealth -= damageToGive;
+            pStats.currentHealth -= damageToGive;
         }
 
-        if (currentHealth <= 0)
+        if (pStats.currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
+        UIMan.HealthBarUpdate();
     }
     public void drinkHealthPotion()
     {
         healthPotionCooldown = true;
-        currentHealth = currentHealth + potionHealthAmount;
-        if(currentHealth > maxHealth)
+        pStats.currentHealth = pStats.currentHealth + potionHealthAmount;
+        if(pStats.currentHealth > maxHealth)
         {
-            currentHealth = maxHealth;
+            pStats.currentHealth = maxHealth;
         }
 
         FindObjectOfType<AudioManager>().Play("PotionDrink");
-        FindObjectOfType<EXPManager>().currentHealthPotions = FindObjectOfType<EXPManager>().currentHealthPotions - 1;
-        FindObjectOfType<UIManager>().healthPotionGUIupdate();
+        pStats.currentHealthPotions = pStats.currentHealthPotions - 1;
+        UIMan.healthPotionGUIupdate();
+        UIMan.HealthBarUpdate();
     }
 }
 

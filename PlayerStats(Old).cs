@@ -1,24 +1,24 @@
-﻿using System.Collections;
+﻿//Depricated now using EXPManager & Playerstats 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EXPManager : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     
     public int playerLevel = 1;
     public int maxLevel = 100;
     public Text levelText;
-    
+    public int currentExp;
     public int baseExp = 1000;
     public int[] expToLevelup;
-
     private HealthManager healthMan;
     private PlayerController playerMan;
-    private PlayerStats pStats;
     private UIManager UIMan;
     private AudioManager audioMan;
     public int currentMoney;
+    public int currentHealthPotions;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +32,6 @@ public class EXPManager : MonoBehaviour
         healthMan = FindObjectOfType<HealthManager>();
         playerMan = FindObjectOfType<PlayerController>();
         UIMan = FindObjectOfType<UIManager>();
-        pStats = FindObjectOfType<PlayerStats>();
         audioMan = FindObjectOfType<AudioManager>();
     }
 
@@ -43,17 +42,17 @@ public class EXPManager : MonoBehaviour
     }
     public void giveExp(int expToGive)
     {
-        pStats.currentExp = pStats.currentExp + expToGive;
+        currentExp = currentExp + expToGive;
         upDateStats();
     }
     void upDateStats()
     {
-        if (pStats.currentExp >= expToLevelup[playerLevel] + expToLevelup[playerLevel + 1])
+        if (currentExp >= expToLevelup[playerLevel] + expToLevelup[playerLevel + 1])
         {
             playerLevel++;
             audioMan.Play("LevelUpSound");
             healthMan.maxHealth = healthMan.maxHealth + playerLevel;
-            pStats.currentHealth = healthMan.maxHealth;
+            healthMan.currentHealth = healthMan.maxHealth;
             playerMan.damage = playerMan.damage + 1;
             if(playerLevel % 2 == 0)
             {
