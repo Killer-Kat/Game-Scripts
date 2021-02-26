@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class EXPManager : MonoBehaviour
 {
     
-    public int playerLevel = 1;
-    public int maxLevel = 100;
-    public Text levelText;
     
+    public Text levelText;
+
+    public int maxLevel = 100;
     public int baseExp = 1000;
     public int[] expToLevelup;
 
@@ -18,29 +18,20 @@ public class EXPManager : MonoBehaviour
     private PlayerStats pStats;
     private UIManager UIMan;
     private AudioManager audioMan;
-    public int currentMoney;
+    
     // Start is called before the first frame update
     void Start()
     {
-        levelText.text = "Level: " + playerLevel;
-        expToLevelup = new int[maxLevel];
-        expToLevelup[1] = baseExp;
-        for(int i = 2; i < expToLevelup.Length; i++)
-        {
-            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.25f);
-        }
+        
+        Invoke("Startup", 0.1f);
         healthMan = FindObjectOfType<HealthManager>();
         playerMan = FindObjectOfType<PlayerController>();
         UIMan = FindObjectOfType<UIManager>();
         pStats = FindObjectOfType<PlayerStats>();
         audioMan = FindObjectOfType<AudioManager>();
+        levelText.text = "Level: " + pStats.playerLevel;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void giveExp(int expToGive)
     {
         pStats.currentExp = pStats.currentExp + expToGive;
@@ -48,23 +39,32 @@ public class EXPManager : MonoBehaviour
     }
     void upDateStats()
     {
-        if (pStats.currentExp >= expToLevelup[playerLevel] + expToLevelup[playerLevel + 1])
+        if (pStats.currentExp >= expToLevelup[pStats.playerLevel] + expToLevelup[pStats.playerLevel + 1])
         {
-            playerLevel++;
+            pStats.playerLevel++;
             audioMan.Play("LevelUpSound");
-            healthMan.maxHealth = healthMan.maxHealth + playerLevel;
-            pStats.currentHealth = healthMan.maxHealth;
-            playerMan.damage = playerMan.damage + 1;
-            if(playerLevel % 2 == 0)
+            pStats.maxHealth = pStats.maxHealth + pStats.playerLevel;
+            pStats.currentHealth = pStats.maxHealth;
+            pStats.damage = pStats.damage + 1;
+            if(pStats.playerLevel % 2 == 0)
             {
-                playerMan.moveSpeed = playerMan.moveSpeed + 0.1f;
+                pStats.moveSpeed = pStats.moveSpeed + 0.1f;
             }
-            if (playerLevel % 10 == 0)
+            if (pStats.playerLevel % 10 == 0)
             {
-                healthMan.playerArmor = healthMan.playerArmor + 1;
+                pStats.playerArmor = pStats.playerArmor + 1;
             }
         }
-        levelText.text = "Level: " + playerLevel;
+        levelText.text = "Level: " + pStats.playerLevel;
         UIMan.expBarUpdate();
+    }
+    private void Startup()
+    {
+        expToLevelup = new int[maxLevel];
+        expToLevelup[1] = baseExp;
+        for (int i = 2; i < expToLevelup.Length; i++)
+        {
+            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.25f);
+        }
     }
 }

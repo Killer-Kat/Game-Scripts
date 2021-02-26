@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public InventoryObject inventory;
-    public float moveSpeed = 5f;
     public Rigidbody2D rb;
     public Vector2 movement;
     public Animator myAnimator;
+
     private float attackTime = 1f;
     private float attackCounter = 1f;
     private bool isAttacking;
-    public int damage = 10;
     public Transform firePoint;
     public GameObject Arrow;
     public Vector2 lastMove;
+
     public int areaTransitionIndex;
     private GameObject[] players;
 
@@ -100,11 +100,11 @@ public class PlayerController : MonoBehaviour
             inventory.Load();
         } if (Input.GetKeyDown(KeyCode.B))
         {
-            SavePlayer();
+            pStats.SavePlayer();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
-            LoadPlayer();
+            pStats.LoadPlayer();
         }
 
     }
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         if (isAttacking == false)
         {
             movement.Normalize();
-            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + movement * pStats.moveSpeed * Time.fixedDeltaTime); //Note to self cache movespeed with function so the script isnt constantly looking it up here, bonus allows easy speed potion implimentation.
         }
     }
     void FindTransPos()
@@ -144,23 +144,5 @@ public class PlayerController : MonoBehaviour
     private void OnApplicationQuit()
     {
     inventory.Container.Clear();
-    }
-    public void SavePlayer ()
-    {
-        SaveSystem.SavePlayer(this);
-    }
-    public void LoadPlayer ()
-    {
-        PlayerData data = SaveSystem.LoadPlayer();
-
-        playerLevel = data.playerLevel;
-        health = data.health;
-
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        transform.position = position;
-
     }
 }

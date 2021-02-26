@@ -46,9 +46,9 @@ public class UIManager : MonoBehaviour
     }
     public void HealthBarUpdate()
     {
-        healthBar.maxValue = healthMan.maxHealth;
+        healthBar.maxValue = pStats.maxHealth;
         healthBar.value = pStats.currentHealth;
-        hpText.text = "HP: " + pStats.currentHealth + "/" + healthMan.maxHealth;
+        hpText.text = "HP: " + pStats.currentHealth + "/" + pStats.maxHealth;
     }
     public void expBarUpdate()
     {
@@ -67,6 +67,6 @@ public class UIManager : MonoBehaviour
     }
     public void armorGUIupdate()
     {
-        armorText.text = "Armor: " + healthMan.playerArmor;
+        armorText.text = "Armor: " + pStats.playerArmor;
     }
 }
