@@ -131,18 +131,19 @@ public class PlayerController : MonoBehaviour
     {
         healthMan.healthPotionCooldown = false;
     }
-    public void OnTriggerEnter2D(Collider2D other)
+   public void OnTriggerEnter2D(Collider2D other)
     {
-        var item = other.GetComponent<Item>();
+        var item = other.GetComponent<ItemPickup>();
 
         if (item)
         {
-            inventory.AddItem(item.item, 1);
+            inventory.AddItem(new Item(item.item), 1);
             Destroy(other.gameObject);
+            FindObjectOfType<AudioManager>().Play(item.pickUpSound);
         }
-    }
+    } 
     private void OnApplicationQuit()
     {
-    inventory.Container.Clear();
+        inventory.Container.Items = new InventorySlot[28]; //making sure that we dont keep the inventory between resets
     }
 }

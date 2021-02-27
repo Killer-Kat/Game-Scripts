@@ -53,6 +53,7 @@ public class EXPManager : MonoBehaviour
             if (pStats.playerLevel % 10 == 0)
             {
                 pStats.playerArmor = pStats.playerArmor + 1;
+                UIMan.armorGUIupdate();
             }
         }
         levelText.text = "Level: " + pStats.playerLevel;

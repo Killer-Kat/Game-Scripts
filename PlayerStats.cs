@@ -18,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     public int damage = 10;
     //General
     public float moveSpeed = 5f;
+    public int currentScene;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,7 @@ public class PlayerStats : MonoBehaviour
         playerArmor = data.playerArmor;
         damage = data.damage;
         moveSpeed = data.moveSpeed;
+        currentScene = data.currentScene;
 
         Vector3 position;
         position.x = data.position[0];

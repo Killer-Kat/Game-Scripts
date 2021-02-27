@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
         EXPMan = FindObjectOfType<EXPManager>();
         Invoke("expBarUpdate", 1);
         Invoke("HealthBarUpdate", 1);
+        healthPotionGUIupdate();
         DontDestroyOnLoad(gameObject);
     }
 

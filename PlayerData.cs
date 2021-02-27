@@ -14,6 +14,7 @@ public class PlayerData
     public int playerArmor;
     public int damage = 10;
     public float moveSpeed = 5f;
+    public int currentScene;
 
     public float[] position;
 
@@ -28,6 +29,7 @@ public class PlayerData
         playerArmor = player.playerArmor;
         damage = player.damage;
         moveSpeed = player.moveSpeed;
+        currentScene = player.currentScene;
 
         position = new float[3];
         position[0] = player.transform.position.x;

@@ -32,6 +32,7 @@ public class AreaTransition : MonoBehaviour
     void LoadScene()
     {
         FindObjectOfType<PlayerController>().areaTransitionIndex = NextAreaTransitionIndex;
+        FindObjectOfType<PlayerStats>().currentScene = levelToLoad;
         audioMan.StopPlaying(currentBGM);
         audioMan.Play(nextBGM);
         SceneManager.LoadScene(levelToLoad);
