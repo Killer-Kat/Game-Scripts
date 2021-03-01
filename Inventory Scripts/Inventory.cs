@@ -29,6 +29,23 @@ public class Inventory : MonoBehaviour
 
     public bool Add (Item item) //Adds an Item class object to the list "items"
     {
+        if(item.isStackable == true)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if(items[i].name == item.name)
+                {
+                    items[i].itemAmount++;
+                    Debug.Log("Player now has " + items[i].itemAmount + " " + items[i].name);
+                    if (OnItemChangedCallback != null) //can remove later, just making sure we have methods attached so we dont get an error.
+                    {
+                        OnItemChangedCallback.Invoke(); // let everyone know we picked up an item.
+                    }
+                    return true;
+                }
+            }
+        }
+                
         if (items.Count >= space) //see if we have enough space to pick the item up
         {
             Debug.Log("Not Enough Room to pickup " + item.name);

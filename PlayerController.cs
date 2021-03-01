@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
 
-
+    Inventory inventory; //making an Inventory object called inventory, our inventory is handled by a different script attached to the player
 
     public Rigidbody2D rb;
     public Vector2 movement;
@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
         cacheSpeed();
+        inventory = Inventory.instance; //setting our inventory object to the singleton
+        
 
     }
     private void OnLevelWasLoaded(int level)
@@ -162,8 +164,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-       
-        //Nothing yet
+        for (int i = 0; i < inventory.items.Count; i++)
+        {
+            if (inventory.items[i].isStackable == true)
+            {
+            inventory.items[i].itemAmount = 1; //We set it to one and not zero or otherwise the first one you pick up wont count because of the way our code is written currently
+            }
+        }
 
     }
 
