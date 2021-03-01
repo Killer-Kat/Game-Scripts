@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
 
-    public InventoryObject inventory;
-    public InventoryObject equipment;
+    
 
     public Rigidbody2D rb;
     public Vector2 movement;
@@ -26,14 +26,15 @@ public class PlayerController : MonoBehaviour
     private HealthManager healthMan;
     private PlayerStats pStats;
 
-    public int health = 1; // DOnt use this, its only temporaray before the refactor
-    public int playerLevel = 1; //THis also is only temp
+
+
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
+
     }
     private void OnLevelWasLoaded(int level)
     {
@@ -48,6 +49,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            movement.x = 0;
+            movement.y = 0;
+            return;
+        }
         //Input
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
@@ -98,14 +105,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            inventory.Save();
-            equipment.Save();
+          //
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            inventory.Load();
-            equipment.Load();
-        } if (Input.GetKeyDown(KeyCode.B))
+            //
+        } 
+        if (Input.GetKeyDown(KeyCode.B))
         {
             pStats.SavePlayer();
         }
@@ -138,21 +144,18 @@ public class PlayerController : MonoBehaviour
     {
         healthMan.healthPotionCooldown = false;
     }
-   public void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         var item = other.GetComponent<ItemPickup>();
+        item.Pickup();
+        //FindObjectOfType<AudioManager>().Play(item.pickUpSound);
+    }
 
-        if (item)
-        {
-            inventory.AddItem(new Item(item.item), 1);
-            Destroy(other.gameObject);
-            FindObjectOfType<AudioManager>().Play(item.pickUpSound);
-        }
-    } 
     private void OnApplicationQuit()
     {
-        //inventory.Container.Items = new InventorySlot[28]; //making sure that we dont keep the inventory between resets
-        inventory.Clear();
-        equipment.Clear();
+       
+        //Nothing yet
+
     }
+
 }

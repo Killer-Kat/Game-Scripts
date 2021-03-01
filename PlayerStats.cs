@@ -19,10 +19,24 @@ public class PlayerStats : MonoBehaviour
     //General
     public float moveSpeed = 5f;
     public int currentScene;
-    // Start is called before the first frame update
+    //Stat modifiers
+    public int armormod = 0;
+    public int damagemod = 0;
+   
     void Start()
     {
-        
+        EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
+    }
+    void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
+    {
+        if (newItem != null)
+        {
+            //change stats positive 
+        }
+        if (oldItem != null)
+        {
+          //change stats negitive
+        }
     }
     public void SavePlayer()
     {
