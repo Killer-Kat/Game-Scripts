@@ -18,10 +18,11 @@ public class HealthManager : MonoBehaviour
     }
     public void HurtPlayer(int damageToGive)
     {
-        int damageTaken = damageToGive - pStats.playerArmor;
+        int damageTaken = damageToGive - pStats.playerArmor - pStats.armormod;
+        
         if (damageTaken > 0)
         {
-            pStats.currentHealth -= damageToGive;
+            pStats.currentHealth -= damageTaken;
         }
 
         if (pStats.currentHealth <= 0)

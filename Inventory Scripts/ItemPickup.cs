@@ -9,11 +9,13 @@ public class ItemPickup : MonoBehaviour
     public void Pickup()
     {
 
-        Debug.Log("Picking up " + item.name);
+        
         bool wasPickedUp = Inventory.instance.Add(item); //Because there is only ever one innventory object we can call the instance to get the inventory.
         if (wasPickedUp)
         {
+            FindObjectOfType<AudioManager>().Play(item.pickUpSound);
             Destroy(gameObject); //Destroys whatever this script is on
+
         }
     }
 }

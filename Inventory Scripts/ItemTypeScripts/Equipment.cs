@@ -8,6 +8,7 @@ public class Equipment : Item
     public EquipmentSlot equipSlot;
     public int armorModifier;
     public int damageModifer;
+    public int speedModifer;
     public override void Use()
     {
         base.Use();

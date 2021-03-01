@@ -49,6 +49,7 @@ public class EXPManager : MonoBehaviour
             if(pStats.playerLevel % 2 == 0)
             {
                 pStats.moveSpeed = pStats.moveSpeed + 0.1f;
+                playerMan.cacheSpeed();
             }
             if (pStats.playerLevel % 10 == 0)
             {

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
 
-    
+
 
     public Rigidbody2D rb;
     public Vector2 movement;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private HealthManager healthMan;
     private PlayerStats pStats;
+    private float cachedSpeed;
 
 
 
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
+        cacheSpeed();
 
     }
     private void OnLevelWasLoaded(int level)
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             movement.x = 0;
             movement.y = 0;
+            myAnimator.SetFloat("Speed", 0);
             return;
         }
         //Input
@@ -105,12 +108,12 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-          //
+            //
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
             //
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             pStats.SavePlayer();
@@ -126,7 +129,7 @@ public class PlayerController : MonoBehaviour
         if (isAttacking == false)
         {
             movement.Normalize();
-            rb.MovePosition(rb.position + movement * pStats.moveSpeed * Time.fixedDeltaTime); //Note to self cache movespeed with function so the script isnt constantly looking it up here, bonus allows easy speed potion implimentation.
+            rb.MovePosition(rb.position + movement * cachedSpeed * Time.fixedDeltaTime); //Note to self cache movespeed with function so the script isnt constantly looking it up here, bonus allows easy speed potion implimentation.
         }
     }
     void FindTransPos()
@@ -146,9 +149,15 @@ public class PlayerController : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        var item = other.GetComponent<ItemPickup>();
-        item.Pickup();
-        //FindObjectOfType<AudioManager>().Play(item.pickUpSound);
+        if (other.GetComponent<ItemPickup>() != null)
+            {
+            var item = other.GetComponent<ItemPickup>();
+            item.Pickup();
+        }
+    }
+    public void cacheSpeed() //If I understand how memeory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
+    {
+        cachedSpeed = pStats.moveSpeed;
     }
 
     private void OnApplicationQuit()

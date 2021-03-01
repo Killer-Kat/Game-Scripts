@@ -68,6 +68,6 @@ public class UIManager : MonoBehaviour
     }
     public void armorGUIupdate()
     {
-        armorText.text = "Armor: " + pStats.playerArmor;
+        armorText.text = "Armor: " + (pStats.playerArmor + pStats.armormod);
     }
 }
