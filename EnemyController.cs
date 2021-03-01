@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public int dropChance =75;
     public GameObject droppedLoot;
+    public string DeathSound = "EnemyDeath";
     private EXPManager pStats;
     private AudioManager audioMan;
 
@@ -78,7 +79,7 @@ public class EnemyController : MonoBehaviour
     {
         speed = 0;
         myAnim.Play("DeathEffect");
-        audioMan.Play("EnemyDeath");
+        audioMan.Play(DeathSound);
         Destroy(gameObject, 0.6f);
         pStats.giveExp(expValue);
         

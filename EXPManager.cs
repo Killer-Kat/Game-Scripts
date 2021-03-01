@@ -55,9 +55,14 @@ public class EXPManager : MonoBehaviour
                 pStats.playerArmor = pStats.playerArmor + 1;
                 UIMan.armorGUIupdate();
             }
+            if (pStats.currentExp >= expToLevelup[pStats.playerLevel] + expToLevelup[pStats.playerLevel + 1])
+            {
+                upDateStats();
+            }
         }
         levelText.text = "Level: " + pStats.playerLevel;
         UIMan.expBarUpdate();
+        UIMan.HealthBarUpdate();
     }
     private void Startup()
     {

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //public MouseItem mouseItem = new MouseItem();
+
     public InventoryObject inventory;
+    public InventoryObject equipment;
+
     public Rigidbody2D rb;
     public Vector2 movement;
     public Animator myAnimator;
@@ -95,9 +99,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             inventory.Save();
-        }if (Input.GetKeyDown(KeyCode.V))
+            equipment.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.V))
         {
             inventory.Load();
+            equipment.Load();
         } if (Input.GetKeyDown(KeyCode.B))
         {
             pStats.SavePlayer();
@@ -144,6 +151,8 @@ public class PlayerController : MonoBehaviour
     } 
     private void OnApplicationQuit()
     {
-        inventory.Container.Items = new InventorySlot[28]; //making sure that we dont keep the inventory between resets
+        //inventory.Container.Items = new InventorySlot[28]; //making sure that we dont keep the inventory between resets
+        inventory.Clear();
+        equipment.Clear();
     }
 }
