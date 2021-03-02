@@ -7,9 +7,11 @@ public class AreaTransition : MonoBehaviour
 {
     public int levelToLoad;
     public int NextAreaTransitionIndex; // Stores a value used to check which exit this transition leads to in the next level.
+    public bool isNextLevelLit;
     public string currentBGM;
     public string nextBGM;
     private AudioManager audioMan;
+    PlayerController playerMan;
     
     // Update is called once per frame
     void Start()
@@ -31,7 +33,9 @@ public class AreaTransition : MonoBehaviour
     }
     void LoadScene()
     {
-        FindObjectOfType<PlayerController>().areaTransitionIndex = NextAreaTransitionIndex;
+        playerMan = FindObjectOfType<PlayerController>();
+        playerMan.areaTransitionIndex = NextAreaTransitionIndex;
+        playerMan.nextLevelLit = isNextLevelLit;
         FindObjectOfType<PlayerStats>().currentScene = levelToLoad;
         audioMan.StopPlaying(currentBGM);
         audioMan.Play(nextBGM);

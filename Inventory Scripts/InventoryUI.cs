@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
     }
-    void UpdateUI()
+    public void UpdateUI()
     {
        for (int i = 0; i < slots.Length; i++)
         {

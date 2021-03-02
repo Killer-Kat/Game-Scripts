@@ -5,7 +5,8 @@ public class Lantern : Item
 {
     public bool isLanternOn;
     public bool isSkullLantern;
-    public GameObject lanternLightPrefab;
+    public Sprite offSprite;
+    public Sprite onSprite;
     public LanternController existingLight;
     public Color lanternColor; // = new Color (0.98f,0.83f,0.14f);
     public float lanternIntensity = 1;
@@ -15,9 +16,18 @@ public class Lantern : Item
     public override void Use()
     {
         //base.Use();
-
+        
         existingLight = FindObjectOfType<LanternController>(); //Cant seem to get this to work outside of the use function.
         isLanternOn = !isLanternOn;
+        if(isLanternOn == true)
+        {
+            icon = onSprite;
+        }
+        else
+        {
+            icon = offSprite;
+        }
+        FindObjectOfType<InventoryUI>().UpdateUI();
         existingLight.lt.color = lanternColor;
         existingLight.lt.intensity = lanternIntensity;
         existingLight.lt.pointLightInnerRadius = lanternRadiusInner;

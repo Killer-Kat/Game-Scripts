@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Vector2 movement;
     public Animator myAnimator;
+    public SpriteRenderer playerSpriteRenderer;
+
+    public Material LitMaterialRef;
+    public Material UnlitMaterialRef;
 
     private float attackTime = 1f;
     private float attackCounter = 1f;
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 lastMove;
 
     public int areaTransitionIndex;
+    public bool nextLevelLit;
     private GameObject[] players;
 
     private HealthManager healthMan;
@@ -42,6 +47,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
+        if(nextLevelLit == true)
+        {
+            playerSpriteRenderer.material = LitMaterialRef;
+        }
+        else
+        {
+            playerSpriteRenderer.material = UnlitMaterialRef;
+        }
         FindTransPos();
         players = GameObject.FindGameObjectsWithTag("Player");
 
