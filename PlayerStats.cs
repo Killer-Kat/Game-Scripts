@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     private UIManager UIMan;
+    private PlayerController playerMan;
     //Leveling
     public int playerLevel = 1;
     public int currentExp;
@@ -23,12 +24,13 @@ public class PlayerStats : MonoBehaviour
     //Stat modifiers
     public int armormod = 0;
     public int damagemod = 0;
-    public int speedmod = 0;
+    public float speedmod = 0;
    
     void Start()
     {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
         UIMan = FindObjectOfType<UIManager>();
+        playerMan = FindObjectOfType<PlayerController>();
     }
     void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
     {
@@ -45,6 +47,7 @@ public class PlayerStats : MonoBehaviour
             speedmod = speedmod - oldItem.speedModifer;
         }
         UIMan.armorGUIupdate();
+        playerMan.cacheSpeed();
     }
     public void SavePlayer()
     {

@@ -12,10 +12,12 @@ public class EquipmentManager : MonoBehaviour
         instance = this;
     }
     #endregion
-    [SerializeField] Equipment[] currentEquipment;
+    //[SerializeField]
+    public Equipment[] currentEquipment;
 
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment olditem);
     public OnEquipmentChanged onEquipmentChanged;
+    public EquipmentUI equipmentUI;
 
     Inventory inventory;
 
@@ -25,6 +27,7 @@ public class EquipmentManager : MonoBehaviour
 
         int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length; //Gets the length of our equipment slots enum 
         currentEquipment = new Equipment[numSlots];
+        equipmentUI = FindObjectOfType<EquipmentUI>();
 
     }
     public void Equip(Equipment newItem)
@@ -44,8 +47,10 @@ public class EquipmentManager : MonoBehaviour
         }
 
         currentEquipment[slotIndex] = newItem;
+        equipmentUI.UpdateUI();
 
-        
+
+
     }
     public void Unequip(int slotIndex)
     {
@@ -60,6 +65,7 @@ public class EquipmentManager : MonoBehaviour
             {
                 onEquipmentChanged.Invoke(null, oldItem);
             }
+            equipmentUI.UpdateUI();
         }
     }
     public void UnequipAll()

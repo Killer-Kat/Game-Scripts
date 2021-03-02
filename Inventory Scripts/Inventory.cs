@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour
                 if(items[i].name == item.name)
                 {
                     items[i].itemAmount++;
-                    Debug.Log("Player now has " + items[i].itemAmount + " " + items[i].name);
+                    //Debug.Log("Player now has " + items[i].itemAmount + " " + items[i].name);
                     if (OnItemChangedCallback != null) //can remove later, just making sure we have methods attached so we dont get an error.
                     {
                         OnItemChangedCallback.Invoke(); // let everyone know we picked up an item.
@@ -60,6 +60,7 @@ public class Inventory : MonoBehaviour
     }
     public void Remove (Item item) //Removes an Item class object from the list "items"
     {
+        item.itemAmount = 1; //not zero but  one because pickup doesnt increase amount on the first item
         items.Remove(item);
         if (OnItemChangedCallback != null) //can remove later, just making sure we have methods attached so we dont get an error.
         {

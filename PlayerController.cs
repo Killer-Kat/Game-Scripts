@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
     }
     public void cacheSpeed() //If I understand how memeory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
     {
-        cachedSpeed = pStats.moveSpeed;
+        cachedSpeed = pStats.moveSpeed + pStats.speedmod;
     }
 
     private void OnApplicationQuit()

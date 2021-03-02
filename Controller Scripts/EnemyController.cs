@@ -19,7 +19,9 @@ public class EnemyController : MonoBehaviour
     //private int wakeTime = 0;
     public int Health;
     public int dropChance =75;
+    public int dropChance1 = 75;
     public GameObject droppedLoot;
+    public GameObject droppedLoot1;
     public string DeathSound = "EnemyDeath";
     private EXPManager pStats;
     private AudioManager audioMan;
@@ -87,6 +89,12 @@ public class EnemyController : MonoBehaviour
         if(randomValueBetween0And99 < dropChance)
         {
             Instantiate(droppedLoot, transform.position, transform.rotation);
+        }
+        if (randomValueBetween0And99 < dropChance1)
+        {
+            if (droppedLoot1 == null)
+                droppedLoot1 = droppedLoot;
+            Instantiate(droppedLoot1, transform.position, transform.rotation);
         }
 
     }
