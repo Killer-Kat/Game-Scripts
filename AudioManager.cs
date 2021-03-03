@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 	}
 	void Start ()
     {
-		Play("BackGround Music"); //Temp until multi levels are added
+		
     }
 
 	public void Play(string sound)
@@ -65,4 +65,16 @@ public class AudioManager : MonoBehaviour
 
 		s.source.Stop();
 	}
+	public void StopAll()
+    {
+		foreach (Sound i in sounds)
+        {
+			if(i.name.Contains("BackGround") == true){
+				i.source.volume = i.volume * (1f + UnityEngine.Random.Range(-i.volumeVariance / 2f, i.volumeVariance / 2f));
+				i.source.pitch = i.pitch * (1f + UnityEngine.Random.Range(-i.pitchVariance / 2f, i.pitchVariance / 2f));
+				i.source.Stop();
+			}
+			
+		}
+    }
 }

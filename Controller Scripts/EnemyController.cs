@@ -34,6 +34,7 @@ public class EnemyController : MonoBehaviour
         pStats = FindObjectOfType<EXPManager>();
         audioMan = FindObjectOfType<AudioManager>();
 
+
     }
 
     // Update is called once per frame

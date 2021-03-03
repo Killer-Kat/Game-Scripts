@@ -4,8 +4,8 @@ using UnityEngine;
 //This script contains all the values that you want to change durring gameplay and then save to a file.
 public class PlayerStats : MonoBehaviour
 {
-    private UIManager UIMan;
-    private PlayerController playerMan;
+    [System.NonSerialized] public UIManager UIMan;
+    [System.NonSerialized] public PlayerController playerMan;
     //Leveling
     public int playerLevel = 1;
     public int currentExp;

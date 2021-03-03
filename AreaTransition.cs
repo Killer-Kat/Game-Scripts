@@ -16,13 +16,13 @@ public class AreaTransition : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        audioMan = FindObjectOfType<AudioManager>();
+        //audioMan = FindObjectOfType<AudioManager>();
     }
     void Update()
     {
         
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collisionGameObject = collision.gameObject;
 
@@ -31,8 +31,9 @@ public class AreaTransition : MonoBehaviour
             LoadScene();
         }
     }
-    void LoadScene()
+    public void LoadScene()
     {
+        audioMan = FindObjectOfType<AudioManager>();
         playerMan = FindObjectOfType<PlayerController>();
         playerMan.areaTransitionIndex = NextAreaTransitionIndex;
         playerMan.nextLevelLit = isNextLevelLit;

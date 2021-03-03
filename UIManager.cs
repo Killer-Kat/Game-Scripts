@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
     }
     public void expBarUpdate()
     {
-        int ExpForNextLvl = EXPMan.expToLevelup[pStats.playerLevel] + EXPMan.expToLevelup[pStats.playerLevel + 1];
+        int ExpForNextLvl = EXPMan.expToLevelup[pStats.playerLevel + 1];
         ExpBar.maxValue = ExpForNextLvl;
         ExpBar.value = pStats.currentExp;
         xpText.text = "XP: " + pStats.currentExp + "/" + ExpForNextLvl;

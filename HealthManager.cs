@@ -9,12 +9,14 @@ public class HealthManager : MonoBehaviour
 
     private PlayerStats pStats;
     private UIManager UIMan;
+    private AudioManager audioMan;
 
     // Start is called before the first frame update
     void Start()
     {
         pStats = FindObjectOfType<PlayerStats>();
         UIMan = FindObjectOfType<UIManager>();
+        audioMan = FindObjectOfType<AudioManager>();
     }
     public void HurtPlayer(int damageToGive)
     {
@@ -27,7 +29,7 @@ public class HealthManager : MonoBehaviour
 
         if (pStats.currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            Die();
         }
         UIMan.HealthBarUpdate();
     }
@@ -44,6 +46,14 @@ public class HealthManager : MonoBehaviour
         pStats.currentHealthPotions = pStats.currentHealthPotions - 1;
         UIMan.healthPotionGUIupdate();
         UIMan.HealthBarUpdate();
+    }
+    public void Die()
+    {
+        audioMan.StopAll();
+        audioMan.Play("BackGround Music LV0");
+        pStats.playerMan.nextLevelLit = true;
+        pStats.playerMan.areaTransitionIndex = 0;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 }
 

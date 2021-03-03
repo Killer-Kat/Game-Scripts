@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public Material LitMaterialRef;
     public Material UnlitMaterialRef;
 
+
+
     private float attackTime = 1f;
     private float attackCounter = 1f;
     private bool isAttacking;
@@ -123,7 +125,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            //
+            inventory.items[0].Use();
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -156,6 +158,10 @@ public class PlayerController : MonoBehaviour
         else if (areaTransitionIndex == 1)
         {
             transform.position = GameObject.FindWithTag("TransPos02").transform.position;
+        }
+        else if (areaTransitionIndex == 3)
+        {
+            transform.position = GameObject.FindWithTag("TransPos03").transform.position;
         }
     }
     void resetPotionCooldown()

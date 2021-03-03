@@ -39,9 +39,10 @@ public class EXPManager : MonoBehaviour
     }
     void upDateStats()
     {
-        if (pStats.currentExp >= expToLevelup[pStats.playerLevel] + expToLevelup[pStats.playerLevel + 1])
+        if (pStats.currentExp >= expToLevelup[pStats.playerLevel + 1])
         {
             pStats.playerLevel++;
+            pStats.currentExp = pStats.currentExp - expToLevelup[pStats.playerLevel];
             audioMan.Play("LevelUpSound");
             pStats.maxHealth = pStats.maxHealth + pStats.playerLevel;
             pStats.currentHealth = pStats.maxHealth;
@@ -60,8 +61,10 @@ public class EXPManager : MonoBehaviour
             {
                 upDateStats();
             }
+            
         }
         levelText.text = "Level: " + pStats.playerLevel;
+        
         UIMan.expBarUpdate();
         UIMan.HealthBarUpdate();
     }
@@ -71,7 +74,7 @@ public class EXPManager : MonoBehaviour
         expToLevelup[1] = baseExp;
         for (int i = 2; i < expToLevelup.Length; i++)
         {
-            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.25f);
+            expToLevelup[i] = Mathf.FloorToInt(expToLevelup[i - 1] * 1.10f);
         }
     }
 }
