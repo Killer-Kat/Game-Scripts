@@ -7,6 +7,7 @@ public class Item : ScriptableObject
    new public string name = "New Item";
    public Sprite icon = null;
     public string pickUpSound = "Coin";
+    public int itemValue = 10;
     public int itemAmount;
     public bool isStackable;
     public virtual void Use()
