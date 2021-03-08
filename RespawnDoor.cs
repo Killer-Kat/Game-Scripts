@@ -12,7 +12,7 @@ public class RespawnDoor : AreaTransition
     public void Start()
     {
         pStats = FindObjectOfType<PlayerStats>();
-        audioMan = FindObjectOfType<AudioManager>();
+       //udioMan = FindObjectOfType<AudioManager>();
 
     }
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -22,6 +22,7 @@ public class RespawnDoor : AreaTransition
         if (collisionGameObject.name == "Player" && looseEXP == true)
         {
             pStats.playerLevel = 1;
+            pStats.currentExp = 0;
             pStats.maxHealth = 50;
             pStats.currentHealth = 50;
             pStats.damage = 10;
@@ -45,7 +46,7 @@ public class RespawnDoor : AreaTransition
         }
         else if(collisionGameObject.name == "Player")
         {
-            LoadScene();
+            //LoadScene();
         }
     }
 }

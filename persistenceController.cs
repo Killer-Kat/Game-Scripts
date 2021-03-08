@@ -8,6 +8,9 @@ public class persistenceController : MonoBehaviour
     //for the chest to persist, only the script.
     public bool[] chestStatus;
     public int totalChests;
+    //Keys
+
+    
     // Start is called before the first frame update
     void Start()
     {

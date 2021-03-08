@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class EquipmentUISlot : MonoBehaviour
 {
    [SerializeField] private Image UIicon;
+   [SerializeField] private Image TypeIcon;
     public Button removeButton;
     public Text itemAmountText;
     private EquipmentManager equipMan;
@@ -15,6 +16,7 @@ public class EquipmentUISlot : MonoBehaviour
 
         UIicon.sprite = UIitem.icon;
         UIicon.enabled = true;
+        TypeIcon.enabled = false;
         if (UIitem.isStackable == true)
         {
             itemAmountText.enabled = true;
@@ -33,6 +35,7 @@ public class EquipmentUISlot : MonoBehaviour
 
         UIicon.sprite = null;
         UIicon.enabled = false;
+        TypeIcon.enabled = true;
         if (itemAmountText.enabled == true)
         {
             itemAmountText.enabled = false;

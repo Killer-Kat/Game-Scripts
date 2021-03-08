@@ -6,6 +6,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
 {
     public ShopManager shopMan;
     public Image icon;
+    public Text itemNameText;
     public Button sellButton;
     public Image sellButtonImage;
     public Text itemAmountText;
@@ -28,6 +29,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
         sellButton.enabled = true;
         valueText.enabled = true;
         valueText.text = "" + item.itemValue;
+        itemNameText.text = item.name;
         if (item.isStackable == true)
         {
             itemAmountText.enabled = true;
@@ -50,6 +52,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
         sellButtonImage.enabled = false;
         sellButton.enabled = false;
         valueText.enabled = false;
+        itemNameText.text = "";
         if (itemAmountText.enabled == true)
         {
             itemAmountText.enabled = false;
@@ -61,7 +64,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
         if(item != null)
         {
 
-            //Play a sound
+            FindObjectOfType<AudioManager>().Play("Coin");
             pStats.currentMoney = pStats.currentMoney + item.itemValue;
             if (item.isStackable == false | (item.itemAmount == 1 && item.isStackable == true))
             {
@@ -69,7 +72,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
             }
             if(item.isStackable == true && item.itemAmount > 1)
             {
-                item.itemAmount = item.itemAmount - 1;
+                item.itemAmount -= 1;
             }
             FindObjectOfType<UIManager>().coinGUIupdate();
             shopMan.UpdateUI();
