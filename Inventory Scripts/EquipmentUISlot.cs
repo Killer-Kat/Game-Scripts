@@ -27,7 +27,7 @@ public class EquipmentUISlot : MonoBehaviour
             itemAmountText.enabled = false;
             itemAmountText.text = "0";
         }
-        Debug.Log("Slot SET! " + gameObject.name);
+        //Debug.Log("Slot SET! " + gameObject.name);
     }
     public void ClearUISlot()
     {
@@ -43,7 +43,7 @@ public class EquipmentUISlot : MonoBehaviour
         }
         
         UIitem = null;
-        Debug.Log("Slot Cleared " + gameObject.name);
+        //Debug.Log("Slot Cleared " + gameObject.name);
     }
     private void UseItem()
     {

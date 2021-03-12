@@ -14,6 +14,8 @@ public class persistenceController : MonoBehaviour
     public int totalDoors;
     public bool[] KeyRing;
     //Key 0 is the door to the cave shop
+    //Player Housing rooms persistance
+    public bool isMainRoomUnlocked, isCraftingRoomUnlocked, isKitchenUnlocked, isBackRoomUnlocked;
     void Start()
     {
         chestStatus = new bool[totalChests];

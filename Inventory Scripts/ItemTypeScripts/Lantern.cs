@@ -12,6 +12,7 @@ public class Lantern : Item
     public float lanternIntensity = 1;
     public float lanternRadiusInner = 2.56f;
     public float lanternRadiusOuter = 5.74f;
+    //I wanted to change the lights falloff range but for some reason unity does not support this feature.
     
     public override void Use()
     {
@@ -32,6 +33,7 @@ public class Lantern : Item
         existingLight.lt.intensity = lanternIntensity;
         existingLight.lt.pointLightInnerRadius = lanternRadiusInner;
         existingLight.lt.pointLightOuterRadius = lanternRadiusOuter;
+        
         existingLight.ToggleLantern(); 
     }
     
