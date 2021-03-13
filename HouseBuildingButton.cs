@@ -128,13 +128,13 @@ public class HouseBuildingButton : MonoBehaviour
                             else
                             {
                                 invItem.itemAmount = 1;
-                                inventory.Remove(invItem);
+                                inventory.Remove(invItem, true);
                             }
                         }
                         else
                         {
                             invItem.itemAmount = 1;
-                            inventory.Remove(invItem);
+                            inventory.Remove(invItem, true);
                         }
                     }
                 }

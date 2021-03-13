@@ -20,8 +20,8 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public int dropChance =75;
     public int dropChance1 = 75;
-    public GameObject droppedLoot;
-    public GameObject droppedLoot1;
+    public Item droppedLoot;
+    public Item droppedLoot1;
     public string DeathSound = "EnemyDeath";
     private EXPManager pStats;
     private AudioManager audioMan;
@@ -89,14 +89,21 @@ public class EnemyController : MonoBehaviour
         int randomValueBetween0And99 = Random.Range(0, 100);
         if(randomValueBetween0And99 < dropChance)
         {
-            Instantiate(droppedLoot, transform.position, transform.rotation);
+            DropLoot(droppedLoot);
         }
         if (randomValueBetween0And99 < dropChance1)
         {
             if (droppedLoot1 == null)
                 droppedLoot1 = droppedLoot;
-            Instantiate(droppedLoot1, transform.position, transform.rotation);
+            DropLoot(droppedLoot1);
         }
 
+    }
+    public void DropLoot(Item item)
+    {
+        var obj = Instantiate(FindObjectOfType<Inventory>().PickupPrefab, transform.position, transform.rotation);
+        obj.GetComponent<ItemPickup>().SetItem(item);
+        obj.transform.localScale = item.itemPickupScale;
+        
     }
 }

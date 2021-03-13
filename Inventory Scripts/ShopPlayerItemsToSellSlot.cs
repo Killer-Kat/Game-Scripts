@@ -68,7 +68,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
             pStats.currentMoney = pStats.currentMoney + item.itemValue;
             if (item.isStackable == false | (item.itemAmount == 1 && item.isStackable == true))
             {
-                Inventory.instance.Remove(item);
+                Inventory.instance.Remove(item, true);
             }
             if(item.isStackable == true && item.itemAmount > 1)
             {

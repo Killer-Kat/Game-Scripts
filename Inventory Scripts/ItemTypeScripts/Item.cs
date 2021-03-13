@@ -10,6 +10,7 @@ public class Item : ScriptableObject
     public int itemValue = 10;
     public int itemAmount;
     public bool isStackable;
+    public Vector3 itemPickupScale;
     public virtual void Use()
     {
         //PUt what you use the item for here
@@ -18,6 +19,6 @@ public class Item : ScriptableObject
     public void RemoveFromInventory()
     {
         this.itemAmount = 1; //setting it to one and not zero becuase our current code doesnt increase the item count if its the first one you pick up
-        Inventory.instance.Remove(this);
+        Inventory.instance.Remove(this, true);
     }
 }

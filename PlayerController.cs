@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public Material LitMaterialRef;
     public Material UnlitMaterialRef;
 
-
+    public bool PickupDelay = false;
 
     private float attackTime = 1f;
     private float attackCounter = 1f;
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
             if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0)
             {
                 healthMan.drinkHealthPotion();
-                Invoke("resetPotionCooldown", 3);
+                Invoke("ResetPotionCooldown", 3);
             }
         }
         if (Input.GetKeyDown(KeyCode.C))
@@ -164,17 +164,26 @@ public class PlayerController : MonoBehaviour
             transform.position = GameObject.FindWithTag("TransPos03").transform.position;
         }
     }
-    void resetPotionCooldown()
+    void ResetPotionCooldown()
     {
         healthMan.healthPotionCooldown = false;
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<ItemPickup>() != null)
+        if (other.GetComponent<ItemPickup>() != null && PickupDelay == false)
             {
             var item = other.GetComponent<ItemPickup>();
             item.Pickup();
         }
+    }
+    public void DelayPickup()
+    {
+        PickupDelay = true;
+        Invoke("ResetPickupDelay", 5f);
+    }
+    public void ResetPickupDelay()
+    {
+        PickupDelay = false;
     }
     public void cacheSpeed() //If I understand how memeory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
     {

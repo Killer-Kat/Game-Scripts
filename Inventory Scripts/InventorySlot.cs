@@ -41,7 +41,8 @@ public class InventorySlot : MonoBehaviour
     }
     public void OnRemoveButton()
     {
-        Inventory.instance.Remove(item); // pass the item in the item slot to the remove function of the inventory singleton
+        Inventory.instance.DropItem(item, true); // pass the item in the item slot to the remove function of the inventory singleton
+        ClearSlot();
         if (itemAmountText.enabled == true)
         {
             itemAmountText.enabled = false;
