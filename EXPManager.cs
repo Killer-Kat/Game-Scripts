@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EXPManager : MonoBehaviour
 {
     
     
-    public Text levelText;
+    public TextMeshProUGUI levelText;
 
     public int maxLevel = 100;
     public int baseExp = 1000;

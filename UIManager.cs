@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,12 +11,12 @@ public class UIManager : MonoBehaviour
     private EXPManager EXPMan;
 
     public Slider ExpBar;
-    public Text xpText;
+    public TextMeshProUGUI xpText;
     public Slider healthBar;
-    public Text hpText;
-    public Text coinText;
-    public Text healthPotionText;
-    public Text armorText;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI healthPotionText;
+    public TextMeshProUGUI armorText;
     private GameObject[] GUIs;
 
     //This is so that I dont generate multiple GUI's 
