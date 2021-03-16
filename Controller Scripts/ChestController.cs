@@ -7,16 +7,20 @@ public class ChestController : MonoBehaviour
     public int chestRefNumber; //This stores a value thats unique to each chest.
     //[SerializeField] //Enable this if a you need to see if the flag is toggled in game.
     private bool isOpen = false;
+    public bool spawnsPrefab = false;
+    public bool givesItem = false;
     public Transform spawnPoint;
     public SpriteRenderer spriteRenderer;
     public Sprite OpenedChest;
     public GameObject objectInChest;
+    public Item itemInChest;
     private persistenceController persistenceCon;
+    Inventory inventory; //making an Inventory object called inventory
     // Start is called before the first frame update
     void Start()
     {
         persistenceCon = FindObjectOfType<persistenceController>();
-        
+        inventory = Inventory.instance; //setting our inventory object to the singleton
     }
 
     // Update is called once per frame
@@ -48,7 +52,8 @@ public class ChestController : MonoBehaviour
         isOpen = true;
         persistenceCon.chestStatus[chestRefNumber] = true;
         spriteRenderer.sprite = OpenedChest;
-        Instantiate(objectInChest, spawnPoint.position, spawnPoint.rotation);
+        if (spawnsPrefab) { Instantiate(objectInChest, spawnPoint.position, spawnPoint.rotation); }
+        if (givesItem) { inventory.Add(itemInChest); }
         
     }
 }
