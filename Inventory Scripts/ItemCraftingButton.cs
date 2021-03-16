@@ -5,58 +5,82 @@ using UnityEngine.UI;
 
 public class ItemCraftingButton : MonoBehaviour
 {
-    public int CraftingIndex; // this index will store which id the button has, then you can toggle them via script by checking a bool array
+   
     public Item itemToCraft;
     public Image itemToCraftIcon;
-    public int IngredientAmount; //How many ingredients are needed to craft
+    public Text itemToCraftName;
+    private int IngredientAmount; //How many ingredients are needed to craft
+
     public Item FirstCraftingIngredient;
     public Item SecondCraftingIngredient;
     public Item ThirdCraftingIngredient;
+
     public Image FirstCraftingIngredientIcon;
     public Image SecondCraftingIngredientIcon;
     public Image ThirdCraftingIngredientIcon;
+
     public Text FirstCraftingAmountText;
     public Text SecondCraftingAmountText;
     public Text ThirdCraftingAmountText;
     public int FirstCraftingAmount;
     public int SecondCraftingAmount;
     public int ThirdCraftingAmount;
+
     public static Inventory inventory;
-    // Start is called before the first frame update
+   
     void Start()
     {
         inventory = Inventory.instance;
         itemToCraftIcon.sprite = itemToCraft.icon;
-        if (ThirdCraftingIngredient == null)
-        {
-            ThirdCraftingIngredientIcon.enabled = false;
-            ThirdCraftingAmountText.enabled = false;
-        }
-        else
-        {
-            ThirdCraftingAmountText.text = "" + ThirdCraftingAmount;
-            ThirdCraftingIngredientIcon.sprite = ThirdCraftingIngredient.icon;
-        }
+        itemToCraftName.text = itemToCraft.name;
         if (SecondCraftingIngredient == null)
         {
-            SecondCraftingIngredientIcon.enabled = false;
-            SecondCraftingAmountText.enabled = false;
+            IngredientAmount = 1;
+        } else if(ThirdCraftingIngredient == null)
+        {
+            IngredientAmount = 2;
         }
         else
         {
-            SecondCraftingAmountText.text = "" + SecondCraftingAmount;
-            SecondCraftingIngredientIcon.sprite = SecondCraftingIngredient.icon;
+            IngredientAmount = 3;
         }
+        switch (IngredientAmount)//Here we just check if we need to set the GUI for the second and third crafting ingredients
+        {
+            case 1:
+                SecondCraftingIngredientIcon.enabled = false;
+                SecondCraftingAmountText.enabled = false;
+                ThirdCraftingIngredientIcon.enabled = false;
+                ThirdCraftingAmountText.enabled = false;
+                break;
+            case 2:
+                SecondCraftingAmountText.text = "" + SecondCraftingAmount;
+                SecondCraftingIngredientIcon.sprite = SecondCraftingIngredient.icon;
+                ThirdCraftingIngredientIcon.enabled = false;
+                ThirdCraftingAmountText.enabled = false;
+                break;
+            case 3:
+                SecondCraftingAmountText.text = "" + SecondCraftingAmount;
+                SecondCraftingIngredientIcon.sprite = SecondCraftingIngredient.icon;
+                ThirdCraftingAmountText.text = "" + ThirdCraftingAmount;
+                ThirdCraftingIngredientIcon.sprite = ThirdCraftingIngredient.icon;
+                break;
+
+            default:
+                Debug.LogWarning("No Items Set In Crafting Button!");
+                break;
+                
+        }
+
         FirstCraftingAmountText.text = "" + FirstCraftingAmount;
         FirstCraftingIngredientIcon.sprite = FirstCraftingIngredient.icon;
         
-}
+    }
         
     public void CraftingButton()
     {
 
     }
-    public bool IngredientCheck()
+    public bool IngredientCheck() //Returns true if we have enough to craft the item, otherwise returns false.
     {
         bool hasFirstItem = false;
         bool hasSecondItem = false;
@@ -214,46 +238,147 @@ public class ItemCraftingButton : MonoBehaviour
     }
    public void CraftItem()
     {
+         bool RemoveFirstIngredient()
+        {
+            for (int i = 0; i < inventory.items.Count; i++)
+            {
+                Item invItem = inventory.items[i];
+                if (FirstCraftingIngredient.name == invItem.name)
+                {
+                    if (FirstCraftingAmount > 1)
+                    {
+                        if (FirstCraftingAmount < invItem.itemAmount)
+                        {
+                            invItem.itemAmount -= FirstCraftingAmount;
+                            return true;
+                        }
+                        else
+                        {
+                            inventory.Remove(invItem, true);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        inventory.Remove(invItem, true);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        bool RemoveSecondIngredient()
+        {
+            for (int i = 0; i < inventory.items.Count; i++)
+            {
+                Item invItem = inventory.items[i];
+                if (SecondCraftingIngredient.name == invItem.name)
+                {
+                    if (SecondCraftingAmount > 1)
+                    {
+                        if (SecondCraftingAmount < invItem.itemAmount)
+                        {
+                            invItem.itemAmount -= SecondCraftingAmount;
+                            return true;
+                        }
+                        else
+                        {
+                            inventory.Remove(invItem, true);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        inventory.Remove(invItem, true);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        bool RemoveThirdIngredient()
+        {
+            for (int i = 0; i < inventory.items.Count; i++)
+            {
+                Item invItem = inventory.items[i];
+                if (ThirdCraftingIngredient.name == invItem.name)
+                {
+                    if (ThirdCraftingAmount > 1)
+                    {
+                        if (ThirdCraftingAmount < invItem.itemAmount)
+                        {
+                            invItem.itemAmount -= ThirdCraftingAmount;
+                            return true;
+                        }
+                        else
+                        {
+                            inventory.Remove(invItem, true);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        inventory.Remove(invItem, true);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         if (IngredientCheck())
         {
             switch (IngredientAmount)
             {
                 case 1:
-                    for (int i = 0; i < inventory.items.Count; i++)
+                    if (RemoveFirstIngredient())
                     {
-                        Item invItem = inventory.items[i];
-                        if (FirstCraftingIngredient.name == invItem.name)
-                        {
-                            if (FirstCraftingAmount > 1)
-                            {
-                                if (FirstCraftingAmount < invItem.itemAmount)
-                                {
-                                    invItem.itemAmount -= FirstCraftingAmount;
-                                    break;
-                                }
-                                else
-                                {
-                                    inventory.Remove(invItem, true);
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                inventory.Remove(invItem, true);
-                                break;
-                            }
-                        }
+                        break;
                     }
-                    break;
+                    else 
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + FirstCraftingIngredient.name);
+                            break;
+                    }
+                    
                 case 2:
-                    break;
+                    if (RemoveFirstIngredient() == false)
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + FirstCraftingIngredient.name);
+                    }
+                    if (RemoveSecondIngredient())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + SecondCraftingIngredient.name);
+                        break;
+                    }
+
                 case 3:
-                    break;
+                    if (RemoveFirstIngredient() == false)
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + FirstCraftingIngredient.name);
+                    }
+                    if (RemoveSecondIngredient() == false)
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + SecondCraftingIngredient.name);
+                    }
+                    if (RemoveThirdIngredient())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Debug.LogError("Crafting Happened but did not remove " + ThirdCraftingIngredient.name);
+                        break;
+                    }
                 default:
                     Debug.LogError("Crafting Item Deduction Switch Failed");
                     break;
             }
             inventory.Add(itemToCraft);
+            FindObjectOfType<AudioManager>().Play(itemToCraft.pickUpSound);
         }
     }
 }
