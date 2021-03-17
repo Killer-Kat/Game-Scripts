@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraftingWorkBench : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //These bools are the different types of crafting, each workbench can either craft that type of item or not.
     public bool WoodChopping;
     CraftingGUI craftingGUI;
     void Start()

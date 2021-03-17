@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraftingGUI : MonoBehaviour
 {
-    //These bools are the different types of crafting, each workbench can either craft that kind or not.
+    
     
     public GameObject craftingGUI;
     public GameObject WoodChoppingRecipes;

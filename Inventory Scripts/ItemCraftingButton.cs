@@ -7,6 +7,8 @@ public class ItemCraftingButton : MonoBehaviour
 {
    
     public Item itemToCraft;
+    public int amountOfItemsCrafted = 1; //How many items are being crafted by this recipe 
+    public Text AmountCraftedText;
     public Image itemToCraftIcon;
     public Text itemToCraftName;
     private int IngredientAmount; //How many ingredients are needed to craft
@@ -32,7 +34,8 @@ public class ItemCraftingButton : MonoBehaviour
     {
         inventory = Inventory.instance;
         itemToCraftIcon.sprite = itemToCraft.icon;
-        itemToCraftName.text = itemToCraft.name;
+        itemToCraftName.text = itemToCraft.name + ": " + itemToCraft.description;
+        AmountCraftedText.text = "" + amountOfItemsCrafted;
         if (SecondCraftingIngredient == null)
         {
             IngredientAmount = 1;
@@ -377,7 +380,10 @@ public class ItemCraftingButton : MonoBehaviour
                     Debug.LogError("Crafting Item Deduction Switch Failed");
                     break;
             }
-            inventory.Add(itemToCraft);
+            for (int i = 0; i < amountOfItemsCrafted; i++)
+            {
+                inventory.Add(itemToCraft);
+            }
             FindObjectOfType<AudioManager>().Play(itemToCraft.pickUpSound);
         }
     }
