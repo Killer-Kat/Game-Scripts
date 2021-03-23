@@ -30,9 +30,22 @@ public class persistenceController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SaveWorld()
     {
-        
+        SaveSystem.SaveWorld(this);
+    }
+    public void LoadWorld()
+    {
+        WorldData data = SaveSystem.LoadWorld();
+
+        isMainRoomUnlocked = data.isMainRoomUnlocked;
+        isCraftingRoomUnlocked = data.isCraftingRoomUnlocked;
+        isKitchenUnlocked = data.isKitchenUnlocked;
+        isBackRoomUnlocked = data.isBackRoomUnlocked;
+
+        chestStatus = data.chestStatus;
+        doorStatus = data.doorStatus;
+        KeyRing = data.KeyRing;
+
     }
 }

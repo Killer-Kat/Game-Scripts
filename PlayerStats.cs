@@ -25,6 +25,7 @@ public class PlayerStats : MonoBehaviour
     public int armormod = 0;
     public int damagemod = 0;
     public float speedmod = 0;
+    
    
     void Start()
     {
@@ -73,6 +74,6 @@ public class PlayerStats : MonoBehaviour
         position.y = data.position[1];
         position.z = data.position[2];
         transform.position = position;
-
+        Debug.Log("x" + position.x + "y" + position.y);
     }
 }

@@ -6,16 +6,19 @@ using UnityEngine;
 public class PlayerData
 {
     public int playerLevel;
-    public int currentHealth;
     public int currentExp;
+
+    public int currentHealth;
+
     public int currentMoney;
     public int currentHealthPotions;
+
     public int maxHealth;
     public int playerArmor;
     public int damage = 10;
     public float moveSpeed = 5f;
-    public int currentScene;
 
+    public int currentScene;
     public float[] position;
 
     public PlayerData (PlayerStats player)

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private PlayerStats pStats;
     private float cachedSpeed;
 
+    bool justLoaded = true;
+
 
 
 
@@ -58,12 +60,7 @@ public class PlayerController : MonoBehaviour
             playerSpriteRenderer.material = UnlitMaterialRef;
         }
         FindTransPos();
-        players = GameObject.FindGameObjectsWithTag("Player");
-
-        if (players.Length > 1)
-        {
-            Destroy(players[1]);
-        }
+        
     }
     // Update is called once per frame
     void Update()
@@ -131,9 +128,10 @@ public class PlayerController : MonoBehaviour
         {
             //
         }
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             pStats.SavePlayer();
+            FindObjectOfType<persistenceController>().SaveWorld();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -146,23 +144,35 @@ public class PlayerController : MonoBehaviour
         if (isAttacking == false)
         {
             movement.Normalize();
-            rb.MovePosition(rb.position + movement * cachedSpeed * Time.fixedDeltaTime); //Note to self cache movespeed with function so the script isnt constantly looking it up here, bonus allows easy speed potion implimentation.
+            rb.MovePosition(rb.position + movement * cachedSpeed * Time.fixedDeltaTime); 
         }
     }
     void FindTransPos()
     {
-        if (areaTransitionIndex == 0)
+        if (justLoaded == true)
         {
-            transform.position = GameObject.FindWithTag("TransPos").transform.position;
+            justLoaded = false;
         }
-        else if (areaTransitionIndex == 1)
+        else
         {
-            transform.position = GameObject.FindWithTag("TransPos02").transform.position;
+            if(areaTransitionIndex == 0)
+            {
+                //Dont do anything
+            }
+            else if (areaTransitionIndex == 1)
+            {
+                transform.position = GameObject.FindWithTag("TransPos").transform.position;
+            }
+            else if (areaTransitionIndex == 2)
+            {
+                transform.position = GameObject.FindWithTag("TransPos02").transform.position;
+            }
+            else if (areaTransitionIndex == 3)
+            {
+                transform.position = GameObject.FindWithTag("TransPos03").transform.position;
+            }
         }
-        else if (areaTransitionIndex == 3)
-        {
-            transform.position = GameObject.FindWithTag("TransPos03").transform.position;
-        }
+        
     }
     void ResetPotionCooldown()
     {

@@ -40,12 +40,15 @@ public class UIManager : MonoBehaviour
         healthPotionGUIupdate();
         DontDestroyOnLoad(gameObject);
     }
-
-    // Update is called once per frame
-    void Update() //I know I need to change this, its old code from a tutorial
+    public void UpdateAll()
     {
-        
+        HealthBarUpdate();
+        expBarUpdate();
+        coinGUIupdate();
+        healthPotionGUIupdate();
+        armorGUIupdate();
     }
+   
     public void HealthBarUpdate()
     {
         healthBar.maxValue = pStats.maxHealth;

@@ -1,0 +1,12 @@
+This file contains information about how these scripts work and how I use them to run my game. 
+
+//PlayerController
+This script has all of the movement and controll data needed to move the player as well as all of the buttons to perform actions like attacking, opening things, etc\
+
+//PlayerStats
+This script is where all of the players stats are stored, if you need one you reference this script. it also handles saving the loading the stats using the save system.
+
+//PersistenceController
+This script saves the world data and follows the player around making sure that opened chests stay open and built things stay built.
+because the world is based on scenes that reset every time you load them dark souls style, this is needed for anything you want to stay the same.
+
