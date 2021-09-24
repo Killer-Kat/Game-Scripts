@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,13 +11,12 @@ public class PlayerController : MonoBehaviour
     Inventory inventory; //making an Inventory object called inventory, our inventory is handled by a different script attached to the player
 
     public Rigidbody2D rb;
-    public Vector2 movement;
     public Animator myAnimator;
     public SpriteRenderer playerSpriteRenderer;
 
     public Material LitMaterialRef;
     public Material UnlitMaterialRef;
-
+    
     public bool PickupDelay = false;
 
     private float attackTime = 1f;
@@ -36,9 +36,23 @@ public class PlayerController : MonoBehaviour
 
     bool justLoaded = true;
 
+    [SerializeField] private PlayerInputActions movementAction;
+    [SerializeField] private InputAction movement;
 
-
-
+    private void Awake()
+    {
+        movementAction = new PlayerInputActions();
+    }
+    void OnEnable()
+    {
+        
+        movement = movementAction.Player.Movement;
+        movement.Enable();
+    }
+    private void OnDisable()
+    {
+        movement.Disable();
+    }
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -65,23 +79,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(movement.ReadValue<Vector2>().ToString());
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            movement.x = 0;
-            movement.y = 0;
-            myAnimator.SetFloat("Speed", 0);
+            //movement.x = 0;
+           // movement.y = 0;
+          //  myAnimator.SetFloat("Speed", 0);
             return;
         }
+        
         //Input
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        //movement.Normalize();
 
-        myAnimator.SetFloat("Horizontal", movement.x);
-        myAnimator.SetFloat("Vertical", movement.y);
-        myAnimator.SetFloat("Speed", movement.sqrMagnitude);
+        myAnimator.SetFloat("Horizontal", movement.ReadValue<Vector2>().x);
+        myAnimator.SetFloat("Vertical", movement.ReadValue<Vector2>().y);
+        myAnimator.SetFloat("Speed", movement.ReadValue<Vector2>().sqrMagnitude);
         //Sets Idle Direction
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+       /* if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             myAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             myAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
@@ -105,7 +118,8 @@ public class PlayerController : MonoBehaviour
                 myAnimator.SetBool("IsAttacking", false);
                 isAttacking = false;
             }
-        }
+        } */
+        /*
         if (Input.GetButtonDown("Fire1"))
         {
             attackCounter = attackTime;
@@ -137,14 +151,14 @@ public class PlayerController : MonoBehaviour
         {
             pStats.LoadPlayer();
         }
-
-    }
+        */
+    } 
     void FixedUpdate()
     {
         if (isAttacking == false)
         {
-            movement.Normalize();
-            rb.MovePosition(rb.position + movement * cachedSpeed * Time.fixedDeltaTime); 
+           
+            rb.MovePosition(rb.position + movement.ReadValue<Vector2>() * cachedSpeed * Time.fixedDeltaTime); 
         }
     }
     void FindTransPos()

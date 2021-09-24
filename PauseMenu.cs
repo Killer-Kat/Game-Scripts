@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-    void Update()
+     /* void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-    }
+    } */ 
     public void Resume()
     {
         PauseMenuUI.SetActive(false);

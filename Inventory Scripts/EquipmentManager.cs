@@ -76,11 +76,11 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    void Update()
+   /* void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
             UnequipAll();
         }
-    }
+    }*/
 }

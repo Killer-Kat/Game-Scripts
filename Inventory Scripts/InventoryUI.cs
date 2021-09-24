@@ -1,6 +1,6 @@
 ﻿
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class InventoryUI : MonoBehaviour
 {
     public Transform itemsParent;
@@ -18,13 +18,13 @@ public class InventoryUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+     /* void Update()
     {
         if (Input.GetButtonDown("Inventory"))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
-    }
+    } */
     public void UpdateUI()
     {
        for (int i = 0; i < slots.Length; i++)
