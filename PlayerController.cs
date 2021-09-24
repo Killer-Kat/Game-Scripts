@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Debug.Log(movement.ReadValue<Vector2>().ToString());
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject() || PauseMenu.gameIsPaused == true)
         {
           //  movement.x = 0;
            // movement.y = 0;
