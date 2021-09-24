@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void drinkHealthPotionCheck(InputAction.CallbackContext obj)
     {
-        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate function here or if just adding a Logical AND to the if statement is more performant.
+        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate here or if just adding a Logical AND to the if statement is more performant.
         {
             healthMan.drinkHealthPotion();
             Invoke("ResetPotionCooldown", 3); //Used for idempotency so the player cant spam health potions. change the argument to change the length. 
@@ -164,26 +164,7 @@ public class PlayerController : MonoBehaviour
                  isAttacking = false;
              }
          } 
-        /*
-        
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            inventory.items[0].Use();
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            //
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            pStats.SavePlayer();
-            FindObjectOfType<persistenceController>().SaveWorld();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            pStats.LoadPlayer();
-        }
-        */
+       
     }
     void FixedUpdate()
     {
@@ -241,7 +222,7 @@ public class PlayerController : MonoBehaviour
     {
         PickupDelay = false;
     }
-    public void cacheSpeed() //If I understand how memeory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
+    public void cacheSpeed() //If I understand how memory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
     {
         cachedSpeed = pStats.moveSpeed + pStats.speedmod;
     }

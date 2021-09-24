@@ -65,6 +65,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""01c874f5-a6cc-4b27-9d7f-ee67c2c15f3a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -232,6 +240,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""ToggleDebug"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d93bbb54-53c9-4e73-a308-e0627b3f6760"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -246,6 +265,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Player_PauseGame = m_Player.FindAction("Pause Game", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
         m_Player_ToggleDebug = m_Player.FindAction("ToggleDebug", throwIfNotFound: true);
+        m_Player_Return = m_Player.FindAction("Return", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,6 +321,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_PauseGame;
     private readonly InputAction m_Player_OpenInventory;
     private readonly InputAction m_Player_ToggleDebug;
+    private readonly InputAction m_Player_Return;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -311,6 +332,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @PauseGame => m_Wrapper.m_Player_PauseGame;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
         public InputAction @ToggleDebug => m_Wrapper.m_Player_ToggleDebug;
+        public InputAction @Return => m_Wrapper.m_Player_Return;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -338,6 +360,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @ToggleDebug.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebug;
                 @ToggleDebug.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebug;
                 @ToggleDebug.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebug;
+                @Return.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturn;
+                @Return.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturn;
+                @Return.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturn;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +385,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @ToggleDebug.started += instance.OnToggleDebug;
                 @ToggleDebug.performed += instance.OnToggleDebug;
                 @ToggleDebug.canceled += instance.OnToggleDebug;
+                @Return.started += instance.OnReturn;
+                @Return.performed += instance.OnReturn;
+                @Return.canceled += instance.OnReturn;
             }
         }
     }
@@ -372,5 +400,6 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnPauseGame(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnToggleDebug(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
     }
 }
