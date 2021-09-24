@@ -17,14 +17,11 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>(); //Get the inventory slots from our holder object
     }
 
-    // Update is called once per frame
-     /* void Update()
+    
+      public void getPingInvUI()
     {
-        if (Input.GetButtonDown("Inventory"))
-        {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
-        }
-    } */
+    } 
     public void UpdateUI()
     {
        for (int i = 0; i < slots.Length; i++)

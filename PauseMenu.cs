@@ -14,10 +14,9 @@ public class PauseMenu : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-     /* void Update()
+     public void getPing()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+       
             if (gameIsPaused)
             {
                 Resume();
@@ -26,8 +25,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
-        }
-    } */ 
+    }  
     public void Resume()
     {
         PauseMenuUI.SetActive(false);

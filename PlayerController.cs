@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,8 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public int areaTransitionIndex;
     public bool nextLevelLit;
-    private GameObject[] players;
+    private GameObject[] players; //if there is more than one object of the player type in the array it gets deleted, probably deprecated
 
+    private InventoryUI InvUI;
+    private PauseMenu pMenu;
     private HealthManager healthMan;
     private PlayerStats pStats;
     private float cachedSpeed;
@@ -48,7 +51,46 @@ public class PlayerController : MonoBehaviour
         
         movement = movementAction.Player.Movement;
         movement.Enable();
+
+        movementAction.Player.Attack.performed += Attack;
+        movementAction.Player.Attack.Enable();
+
+        movementAction.Player.DrinkHealthPotion.performed += drinkHealthPotionCheck;
+        movementAction.Player.DrinkHealthPotion.Enable();
+
+        movementAction.Player.PauseGame.performed += pingPauseMenu;
+        movementAction.Player.PauseGame.Enable();
+
+        movementAction.Player.OpenInventory.performed += pingIntventoryUI;
+        movementAction.Player.OpenInventory.Enable();
     }
+
+    private void pingIntventoryUI(InputAction.CallbackContext obj)
+    {
+        InvUI.getPingInvUI();
+    }
+
+    private void pingPauseMenu(InputAction.CallbackContext obj)
+    {
+        pMenu.getPing();
+    }
+
+    private void drinkHealthPotionCheck(InputAction.CallbackContext obj)
+    {
+        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0)
+        {
+            healthMan.drinkHealthPotion();
+            Invoke("ResetPotionCooldown", 3);
+        }
+    }
+
+    private void Attack(InputAction.CallbackContext obj)
+    {
+        attackCounter = attackTime;
+        myAnimator.SetBool("IsAttacking", true);
+        isAttacking = true;
+    }
+
     private void OnDisable()
     {
         movement.Disable();
@@ -56,6 +98,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        InvUI = FindObjectOfType<InventoryUI>();
+        pMenu = FindObjectOfType<PauseMenu>();
         healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
         cacheSpeed();
@@ -79,12 +123,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(movement.ReadValue<Vector2>().ToString());
+        //Debug.Log(movement.ReadValue<Vector2>().ToString());
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            //movement.x = 0;
+          //  movement.x = 0;
            // movement.y = 0;
-          //  myAnimator.SetFloat("Speed", 0);
+            myAnimator.SetFloat("Speed", 0);
             return;
         }
         
@@ -94,46 +138,34 @@ public class PlayerController : MonoBehaviour
         myAnimator.SetFloat("Vertical", movement.ReadValue<Vector2>().y);
         myAnimator.SetFloat("Speed", movement.ReadValue<Vector2>().sqrMagnitude);
         //Sets Idle Direction
-       /* if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
-        {
-            myAnimator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-            myAnimator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
-        }
-        if (Input.GetAxisRaw("Horizontal") == 0 & Input.GetAxisRaw("Vertical") == 0)
-        {
-            //Do Nothing!
+        //There is a bug here where the controller joystick does not use whole values and causes this not to cache, will fix later but low priority
+         if (movement.ReadValue<Vector2>().x == 1 || movement.ReadValue<Vector2>().x == -1 || movement.ReadValue<Vector2>().y == 1 || movement.ReadValue<Vector2>().y == -1)
+         {
+             myAnimator.SetFloat("lastMoveX", movement.ReadValue<Vector2>().x);
+             myAnimator.SetFloat("lastMoveY", movement.ReadValue<Vector2>().y);
+         }
+         if (movement.ReadValue<Vector2>().x == 0 & movement.ReadValue<Vector2>().y == 0)
+         {
+             //Do Nothing!
 
-        }
-        else
-        {
-            lastMove.x = movement.x; //Input.GetAxisRaw("Horizontal");
-            lastMove.y = movement.y;//Input.GetAxisRaw("Vertical");
-        }
-        if (isAttacking)
-        {
-            attackCounter -= Time.deltaTime;
-            if (attackCounter <= 0)
-            {
-                Instantiate(Arrow, firePoint.position, firePoint.rotation);
-                myAnimator.SetBool("IsAttacking", false);
-                isAttacking = false;
-            }
-        } */
+         }
+         else
+         {
+             lastMove.x = movement.ReadValue<Vector2>().x; //Input.GetAxisRaw("Horizontal");
+             lastMove.y = movement.ReadValue<Vector2>().y; //Input.GetAxisRaw("Vertical");
+         }
+         if (isAttacking)
+         {
+             attackCounter -= Time.deltaTime;
+             if (attackCounter <= 0)
+             {
+                 Instantiate(Arrow, firePoint.position, firePoint.rotation);
+                 myAnimator.SetBool("IsAttacking", false);
+                 isAttacking = false;
+             }
+         } 
         /*
-        if (Input.GetButtonDown("Fire1"))
-        {
-            attackCounter = attackTime;
-            myAnimator.SetBool("IsAttacking", true);
-            isAttacking = true;
-        }
-        if (Input.GetButtonDown("DrinkHealthPotion"))
-        {
-            if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0)
-            {
-                healthMan.drinkHealthPotion();
-                Invoke("ResetPotionCooldown", 3);
-            }
-        }
+        
         if (Input.GetKeyDown(KeyCode.C))
         {
             inventory.items[0].Use();
@@ -152,13 +184,13 @@ public class PlayerController : MonoBehaviour
             pStats.LoadPlayer();
         }
         */
-    } 
+    }
     void FixedUpdate()
     {
         if (isAttacking == false)
         {
            
-            rb.MovePosition(rb.position + movement.ReadValue<Vector2>() * cachedSpeed * Time.fixedDeltaTime); 
+            rb.MovePosition(rb.position + movement.ReadValue<Vector2>() * cachedSpeed * Time.fixedDeltaTime);  //moves the player object
         }
     }
     void FindTransPos()

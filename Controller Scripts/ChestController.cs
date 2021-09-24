@@ -15,11 +15,13 @@ public class ChestController : MonoBehaviour
     public GameObject objectInChest;
     public Item itemInChest;
     private persistenceController persistenceCon;
+    private static PlayerController pCon;
     Inventory inventory; //making an Inventory object called inventory
     // Start is called before the first frame update
     void Start()
     {
         persistenceCon = FindObjectOfType<persistenceController>();
+        pCon = FindObjectOfType<PlayerController>();
         inventory = Inventory.instance; //setting our inventory object to the singleton
     }
 
