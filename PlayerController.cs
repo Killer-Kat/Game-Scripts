@@ -77,10 +77,10 @@ public class PlayerController : MonoBehaviour
 
     private void drinkHealthPotionCheck(InputAction.CallbackContext obj)
     {
-        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0)
+        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate function here or if just adding a Logical AND to the if statement is more performant.
         {
             healthMan.drinkHealthPotion();
-            Invoke("ResetPotionCooldown", 3);
+            Invoke("ResetPotionCooldown", 3); //Used for idempotency so the player cant spam health potions. change the argument to change the length. 
         }
     }
 
