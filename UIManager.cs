@@ -6,8 +6,6 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    private PlayerStats pStats;
-
     public Slider ExpBar;
     public TextMeshProUGUI xpText;
     public Slider healthBar;
@@ -30,7 +28,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        pStats = FindObjectOfType<PlayerStats>();
         Invoke("expBarUpdate", 1);
         Invoke("HealthBarUpdate", 1);
         healthPotionGUIupdate();
@@ -47,27 +44,27 @@ public class UIManager : MonoBehaviour
    
     public void HealthBarUpdate()
     {
-        healthBar.maxValue = pStats.maxHealth;
-        healthBar.value = pStats.currentHealth;
-        hpText.text = "HP: " + pStats.currentHealth + "/" + pStats.maxHealth;
+        healthBar.maxValue = PlayerStats.Instance.maxHealth;
+        healthBar.value = PlayerStats.Instance.currentHealth;
+        hpText.text = "HP: " + PlayerStats.Instance.currentHealth + "/" + PlayerStats.Instance.maxHealth;
     }
     public void expBarUpdate()
     {
-        int ExpForNextLvl = EXPManager.Instance.expToLevelup[pStats.playerLevel + 1];
+        int ExpForNextLvl = EXPManager.Instance.expToLevelup[PlayerStats.Instance.playerLevel + 1];
         ExpBar.maxValue = ExpForNextLvl;
-        ExpBar.value = pStats.currentExp;
-        xpText.text = "XP: " + pStats.currentExp + "/" + ExpForNextLvl;
+        ExpBar.value = PlayerStats.Instance.currentExp;
+        xpText.text = "XP: " + PlayerStats.Instance.currentExp + "/" + ExpForNextLvl;
     }
     public void coinGUIupdate()
     {
-    coinText.text = "" + pStats.currentMoney;
+    coinText.text = "" + PlayerStats.Instance.currentMoney;
     }
     public void healthPotionGUIupdate()
     {
-        healthPotionText.text = "" + pStats.currentHealthPotions;
+        healthPotionText.text = "" + PlayerStats.Instance.currentHealthPotions;
     }
     public void armorGUIupdate()
     {
-        armorText.text = "Armor: " + (pStats.playerArmor + pStats.armormod);
+        armorText.text = "Armor: " + (PlayerStats.Instance.playerArmor + PlayerStats.Instance.armormod);
     }
 }

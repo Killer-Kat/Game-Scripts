@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private InventoryUI InvUI;
     private PauseMenu pMenu;
-    private PlayerStats pStats;
     private float cachedSpeed;
 
     bool justLoaded = true;
@@ -76,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void drinkHealthPotionCheck(InputAction.CallbackContext obj)
     {
-        if (HealthManager.Instace.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate here or if just adding a Logical AND to the if statement is more performant.
+        if (HealthManager.Instace.healthPotionCooldown == false && PlayerStats.Instance.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate here or if just adding a Logical AND to the if statement is more performant.
         {
             HealthManager.Instace.drinkHealthPotion();
             Invoke("ResetPotionCooldown", 3); //Used for idempotency so the player cant spam health potions. change the argument to change the length. 
@@ -99,7 +98,6 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         InvUI = FindObjectOfType<InventoryUI>();
         pMenu = FindObjectOfType<PauseMenu>();
-        pStats = FindObjectOfType<PlayerStats>();
         cacheSpeed();
         inventory = Inventory.instance; //setting our inventory object to the singleton
         
@@ -222,7 +220,7 @@ public class PlayerController : MonoBehaviour
     }
     public void cacheSpeed() //If I understand how memory allocation works this should cache the speed value so we arent grabing it from playerstats every frame.
     {
-        cachedSpeed = pStats.moveSpeed + pStats.speedmod;
+        cachedSpeed = PlayerStats.Instance.moveSpeed + PlayerStats.Instance.speedmod;
     }
 
     private void OnApplicationQuit()

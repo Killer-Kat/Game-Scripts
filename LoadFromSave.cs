@@ -22,9 +22,9 @@ public class LoadFromSave : MonoBehaviour
     public void LoadGame()
     {
         
-        FindObjectOfType<PlayerStats>().LoadPlayer();
+        PlayerStats.Instance.LoadPlayer();
         FindObjectOfType<persistenceController>().LoadWorld();
-        SceneManager.LoadScene(FindObjectOfType<PlayerStats>().currentScene);
+        SceneManager.LoadScene(PlayerStats.Instance.currentScene);
         FindObjectOfType<UIManager>().UpdateAll();
         Destroy(gameObject);
     }

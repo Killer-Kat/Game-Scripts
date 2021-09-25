@@ -24,7 +24,7 @@ public class CoinController : MonoBehaviour
         if (collisionGameObject.name == "Player")
         {
             FindObjectOfType<AudioManager>().Play("Coin");
-            FindObjectOfType<PlayerStats>().currentMoney = FindObjectOfType<PlayerStats>().currentMoney + coinValue;
+            PlayerStats.Instance.currentMoney = PlayerStats.Instance.currentMoney + coinValue;
             FindObjectOfType<UIManager>().coinGUIupdate();
             Destroy(gameObject);
         }

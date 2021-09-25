@@ -12,11 +12,9 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
     public Text itemAmountText;
     public Text valueText;
     Item item; //making an Item class object called item, yes I am going to keep writing it down so I dont forget.
-    PlayerStats pStats;
 
     public void Start()
     {
-        pStats = FindObjectOfType<PlayerStats>();
         shopMan = FindObjectOfType<ShopManager>();
     }
     public void AddItem(Item newItem)
@@ -65,7 +63,7 @@ public class ShopPlayerItemsToSellSlot : MonoBehaviour
         {
 
             FindObjectOfType<AudioManager>().Play("Coin");
-            pStats.currentMoney = pStats.currentMoney + item.itemValue;
+            PlayerStats.Instance.currentMoney = PlayerStats.Instance.currentMoney + item.itemValue;
             if (item.isStackable == false | (item.itemAmount == 1 && item.isStackable == true))
             {
                 Inventory.instance.Remove(item, true);

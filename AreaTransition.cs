@@ -37,7 +37,7 @@ public class AreaTransition : MonoBehaviour
         playerMan = FindObjectOfType<PlayerController>();
         playerMan.areaTransitionIndex = NextAreaTransitionIndex;
         playerMan.nextLevelLit = isNextLevelLit;
-        FindObjectOfType<PlayerStats>().currentScene = levelToLoad;
+        PlayerStats.Instance.currentScene = levelToLoad;
         audioMan.StopPlaying(currentBGM);
         audioMan.Play(nextBGM);
         SceneManager.LoadScene(levelToLoad);

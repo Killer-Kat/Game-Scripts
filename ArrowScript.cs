@@ -25,7 +25,7 @@ public class ArrowScript : MonoBehaviour
         SpawnOnBreak breakable = hitInfo.GetComponent<SpawnOnBreak>();
         if (enemy != null)
         {
-            enemy.TakeDamage(FindObjectOfType<PlayerStats>().damage);
+            enemy.TakeDamage(PlayerStats.Instance.damage);
         }
         if (breakable != null)
         {

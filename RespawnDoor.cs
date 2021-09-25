@@ -6,13 +6,10 @@ public class RespawnDoor : AreaTransition
 {
     public bool looseEXP;
     public bool looseItems;
-    PlayerStats pStats;
     private AudioManager audioMan;
     // Start is called before the first frame update
     public void Start()
     {
-        pStats = FindObjectOfType<PlayerStats>();
-       //udioMan = FindObjectOfType<AudioManager>();
 
     }
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -21,27 +18,27 @@ public class RespawnDoor : AreaTransition
 
         if (collisionGameObject.name == "Player" && looseEXP == true)
         {
-            pStats.playerLevel = 1;
-            pStats.currentExp = 0;
-            pStats.maxHealth = 50;
-            pStats.currentHealth = 50;
-            pStats.damage = 10;
-            pStats.moveSpeed = 5;
-            pStats.playerArmor = 0;
-            pStats.UIMan.armorGUIupdate();
-            pStats.UIMan.expBarUpdate();
-            pStats.UIMan.HealthBarUpdate();
-            pStats.playerMan.cacheSpeed();
+            PlayerStats.Instance.playerLevel = 1;
+            PlayerStats.Instance.currentExp = 0;
+            PlayerStats.Instance.maxHealth = 50;
+            PlayerStats.Instance.currentHealth = 50;
+            PlayerStats.Instance.damage = 10;
+            PlayerStats.Instance.moveSpeed = 5;
+            PlayerStats.Instance.playerArmor = 0;
+            PlayerStats.Instance.UIMan.armorGUIupdate();
+            PlayerStats.Instance.UIMan.expBarUpdate();
+            PlayerStats.Instance.UIMan.HealthBarUpdate();
+            PlayerStats.Instance.playerMan.cacheSpeed();
             LoadScene();
         }
         else if(collisionGameObject.name == "Player" && looseItems == true)
         {
-            pStats.currentHealth = 50;
-            pStats.currentMoney = 0;
-            pStats.currentHealthPotions = 0;
-            pStats.UIMan.coinGUIupdate();
-            pStats.UIMan.healthPotionGUIupdate();
-            pStats.UIMan.HealthBarUpdate();
+            PlayerStats.Instance.currentHealth = 50;
+            PlayerStats.Instance.currentMoney = 0;
+            PlayerStats.Instance.currentHealthPotions = 0;
+            PlayerStats.Instance.UIMan.coinGUIupdate();
+            PlayerStats.Instance.UIMan.healthPotionGUIupdate();
+            PlayerStats.Instance.UIMan.HealthBarUpdate();
             LoadScene();
         }
         else if(collisionGameObject.name == "Player")

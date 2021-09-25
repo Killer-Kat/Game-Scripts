@@ -26,7 +26,21 @@ public class PlayerStats : MonoBehaviour
     public int damagemod = 0;
     public float speedmod = 0;
     
-   
+    public static PlayerStats Instance { get; private set; }
+
+    private void Awake()
+    {
+        if(Instance == null) 
+        {
+            Instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);//This should (hopefully) never happen
+            Debug.LogWarning("Player Stats Singleton Duplicate Deleted");
+        }
+    }
     void Start()
     {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;

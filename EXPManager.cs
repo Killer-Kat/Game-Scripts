@@ -26,7 +26,6 @@ public class EXPManager : MonoBehaviour
     public int[] expToLevelup;
 
     private PlayerController playerMan;
-    private PlayerStats pStats;
     private UIManager UIMan;
     private AudioManager audioMan;
     
@@ -37,43 +36,42 @@ public class EXPManager : MonoBehaviour
         Invoke("Startup", 0.1f);
         playerMan = FindObjectOfType<PlayerController>();
         UIMan = FindObjectOfType<UIManager>();
-        pStats = FindObjectOfType<PlayerStats>();
         audioMan = FindObjectOfType<AudioManager>();
-        levelText.text = "Level: " + pStats.playerLevel;
+        levelText.text = "Level: " + PlayerStats.Instance.playerLevel;
     }
 
     public void giveExp(int expToGive)
     {
-        pStats.currentExp = pStats.currentExp + expToGive;
+        PlayerStats.Instance.currentExp = PlayerStats.Instance.currentExp + expToGive;
         upDateStats();
     }
     void upDateStats()
     {
-        if (pStats.currentExp >= expToLevelup[pStats.playerLevel + 1])
+        if (PlayerStats.Instance.currentExp >= expToLevelup[PlayerStats.Instance.playerLevel + 1])
         {
-            pStats.playerLevel++;
-            pStats.currentExp = pStats.currentExp - expToLevelup[pStats.playerLevel];
+            PlayerStats.Instance.playerLevel++;
+            PlayerStats.Instance.currentExp = PlayerStats.Instance.currentExp - expToLevelup[PlayerStats.Instance.playerLevel];
             audioMan.Play("LevelUpSound");
-            pStats.maxHealth = pStats.maxHealth + pStats.playerLevel;
-            pStats.currentHealth = pStats.maxHealth;
-            pStats.damage = pStats.damage + 1;
-            if(pStats.playerLevel % 2 == 0)
+            PlayerStats.Instance.maxHealth = PlayerStats.Instance.maxHealth + PlayerStats.Instance.playerLevel;
+            PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
+            PlayerStats.Instance.damage = PlayerStats.Instance.damage + 1;
+            if(PlayerStats.Instance.playerLevel % 2 == 0)
             {
-                pStats.moveSpeed = pStats.moveSpeed + 0.1f;
+                PlayerStats.Instance.moveSpeed = PlayerStats.Instance.moveSpeed + 0.1f;
                 playerMan.cacheSpeed();
             }
-            if (pStats.playerLevel % 10 == 0)
+            if (PlayerStats.Instance.playerLevel % 10 == 0)
             {
-                pStats.playerArmor = pStats.playerArmor + 1;
+                PlayerStats.Instance.playerArmor = PlayerStats.Instance.playerArmor + 1;
                 UIMan.armorGUIupdate();
             }
-            if (pStats.currentExp >= expToLevelup[pStats.playerLevel] + expToLevelup[pStats.playerLevel + 1])
+            if (PlayerStats.Instance.currentExp >= expToLevelup[PlayerStats.Instance.playerLevel] + expToLevelup[PlayerStats.Instance.playerLevel + 1])
             {
                 upDateStats();
             }
             
         }
-        levelText.text = "Level: " + pStats.playerLevel;
+        levelText.text = "Level: " + PlayerStats.Instance.playerLevel;
         
         UIMan.expBarUpdate();
         UIMan.HealthBarUpdate();

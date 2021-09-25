@@ -7,7 +7,6 @@ public class EquipmentUI : MonoBehaviour
 {
     public Transform equipmentSlotHolder;
     public Text statsText;
-    private PlayerStats pStats;
     private EquipmentManager equipMan; //making a Equipment manager class  object and calling it equipman
     private Inventory inventory; //making an Inventory object called inventory
     EquipmentUISlot[] slots;
@@ -16,7 +15,6 @@ public class EquipmentUI : MonoBehaviour
         slots = equipmentSlotHolder.GetComponentsInChildren<EquipmentUISlot>(); //Get the inventory slots from our holder object
         inventory = Inventory.instance; //setting our inventory object to the singleton
         equipMan = EquipmentManager.instance; //setting our inventory object to the singleton
-        pStats = FindObjectOfType<PlayerStats>();
         inventory.OnItemChangedCallback += UpdateUI;
 
 
@@ -41,7 +39,7 @@ public class EquipmentUI : MonoBehaviour
                 slots[i].ClearUISlot(); //if there are no more inventory items, then set the slot to empty
             }
         }
-        statsText.text = "ARM + " + pStats.armormod + " DMG + " + pStats.damagemod + " SPD + " + pStats.speedmod;
+        statsText.text = "ARM + " + PlayerStats.Instance.armormod + " DMG + " + PlayerStats.Instance.damagemod + " SPD + " + PlayerStats.Instance.speedmod;
 
     }
     
