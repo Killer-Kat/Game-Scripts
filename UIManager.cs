@@ -6,9 +6,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    private HealthManager healthMan;
     private PlayerStats pStats;
-    private EXPManager EXPMan;
 
     public Slider ExpBar;
     public TextMeshProUGUI xpText;
@@ -32,9 +30,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
-        EXPMan = FindObjectOfType<EXPManager>();
         Invoke("expBarUpdate", 1);
         Invoke("HealthBarUpdate", 1);
         healthPotionGUIupdate();
@@ -57,7 +53,7 @@ public class UIManager : MonoBehaviour
     }
     public void expBarUpdate()
     {
-        int ExpForNextLvl = EXPMan.expToLevelup[pStats.playerLevel + 1];
+        int ExpForNextLvl = EXPManager.Instance.expToLevelup[pStats.playerLevel + 1];
         ExpBar.maxValue = ExpForNextLvl;
         ExpBar.value = pStats.currentExp;
         xpText.text = "XP: " + pStats.currentExp + "/" + ExpForNextLvl;

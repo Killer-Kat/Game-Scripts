@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
+    public static HealthManager Instace { get; private set; }
+
+    public void Awake()
+    {
+        if (Instace == null)
+        {
+            Instace = this;
+        }
+        else
+        {
+            Destroy(gameObject); //This shoudl never happen
+            Debug.LogError("Health Manager Singleton Duplicate Deleted");
+        }
+    }
+
     public int potionHealthAmount = 25; //the amount of health the health potion restores.
     public bool healthPotionCooldown = false;
 

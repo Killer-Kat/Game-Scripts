@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class HurtPlayer : MonoBehaviour
 {
-    private HealthManager healthMan;
     private float waitToHurt = 2f;
     private bool isTouching;
     [SerializeField]
@@ -13,7 +12,7 @@ public class HurtPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthMan = FindObjectOfType<HealthManager>();
+        
     }
 
     // Update is called once per frame
@@ -24,7 +23,7 @@ public class HurtPlayer : MonoBehaviour
             waitToHurt -= Time.deltaTime;
             if (waitToHurt <= 0)
             {
-                healthMan.HurtPlayer(damageToGive);
+                HealthManager.Instace.HurtPlayer(damageToGive); //Singleton class here, we have a single instance of the HealthManger object and we can call it directly from the class name when needed.
                 waitToHurt = 2f;
             }
         }

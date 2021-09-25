@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private InventoryUI InvUI;
     private PauseMenu pMenu;
-    private HealthManager healthMan;
     private PlayerStats pStats;
     private float cachedSpeed;
 
@@ -77,9 +76,9 @@ public class PlayerController : MonoBehaviour
 
     private void drinkHealthPotionCheck(InputAction.CallbackContext obj)
     {
-        if (healthMan.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate here or if just adding a Logical AND to the if statement is more performant.
+        if (HealthManager.Instace.healthPotionCooldown == false && pStats.currentHealthPotions > 0 && PauseMenu.gameIsPaused != true) //Not sure if I should add a nested if statement for the predicate here or if just adding a Logical AND to the if statement is more performant.
         {
-            healthMan.drinkHealthPotion();
+            HealthManager.Instace.drinkHealthPotion();
             Invoke("ResetPotionCooldown", 3); //Used for idempotency so the player cant spam health potions. change the argument to change the length. 
         }
     }
@@ -100,7 +99,6 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         InvUI = FindObjectOfType<InventoryUI>();
         pMenu = FindObjectOfType<PauseMenu>();
-        healthMan = FindObjectOfType<HealthManager>();
         pStats = FindObjectOfType<PlayerStats>();
         cacheSpeed();
         inventory = Inventory.instance; //setting our inventory object to the singleton
@@ -203,7 +201,7 @@ public class PlayerController : MonoBehaviour
     }
     void ResetPotionCooldown()
     {
-        healthMan.healthPotionCooldown = false;
+        HealthManager.Instace.healthPotionCooldown = false;
     }
     public void OnTriggerEnter2D(Collider2D other)
     {

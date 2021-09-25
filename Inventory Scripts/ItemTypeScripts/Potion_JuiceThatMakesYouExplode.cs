@@ -5,7 +5,7 @@ using UnityEngine;
 public class Potion_JuiceThatMakesYouExplode : Potion
 {
     PlayerStats pStats;
-    HealthManager healthMan;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +15,7 @@ public class Potion_JuiceThatMakesYouExplode : Potion
     public override void DrinkPotion() 
     {
         pStats = FindObjectOfType<PlayerStats>();
-        healthMan = FindObjectOfType<HealthManager>();
         pStats.playerMan.myAnimator.Play("Explode");
-        healthMan.HurtPlayer(100);
+        HealthManager.Instace.HurtPlayer(100);
     }
 }

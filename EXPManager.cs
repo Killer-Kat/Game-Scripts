@@ -6,15 +6,25 @@ using TMPro;
 
 public class EXPManager : MonoBehaviour
 {
-    
-    
+    public static EXPManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            // DontDestroyOnLoad(gameObject); //We dont need this here because its a child gameobject of the main UI which is already set to Dont Destroy on load.
+        }
+        else
+        {
+            Destroy(gameObject); //Failsafe we shoud (hopefully) NEVER have to use this due to the starting level.
+        }
+    }
     public TextMeshProUGUI levelText;
 
     public int maxLevel = 100;
     public int baseExp = 1000;
     public int[] expToLevelup;
 
-    private HealthManager healthMan;
     private PlayerController playerMan;
     private PlayerStats pStats;
     private UIManager UIMan;
@@ -25,7 +35,6 @@ public class EXPManager : MonoBehaviour
     {
         
         Invoke("Startup", 0.1f);
-        healthMan = FindObjectOfType<HealthManager>();
         playerMan = FindObjectOfType<PlayerController>();
         UIMan = FindObjectOfType<UIManager>();
         pStats = FindObjectOfType<PlayerStats>();

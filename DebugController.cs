@@ -18,9 +18,7 @@ public class DebugController : MonoBehaviour
 
     public List<object> commandList;
 
-    private HealthManager healthMan;
     private PlayerStats pStats;
-    private EXPManager expMan;
     public void OnToggleDebug(InputValue value)
     {
         showConsole = !showConsole;
@@ -38,9 +36,8 @@ public class DebugController : MonoBehaviour
 
     private void Awake()
     {
-        healthMan = FindObjectOfType<HealthManager>();
+        
         pStats = FindObjectOfType<PlayerStats>(); //Ugh! I feel dirty writing these still, I need another refactor so I can stop doing this. I'll see about switching to singletons later.
-        expMan = FindObjectOfType<EXPManager>();
         ROSEBUD = new DebugCommand("rosebud", "Adds 1000 gold.", "rosebud", () =>
         {
             pStats.currentMoney += 1000;
@@ -49,7 +46,7 @@ public class DebugController : MonoBehaviour
 
         DING = new DebugCommand("ding", "Raises player by one level", "ding", () =>
          {
-             expMan.giveExp(expMan.expToLevelup[pStats.playerLevel + 1]);
+             EXPManager.Instance.giveExp(EXPManager.Instance.expToLevelup[pStats.playerLevel + 1]);
          });
 
         SET_GOLD = new DebugCommand<int>("set_gold", "Sets the amount of gold", "set_gold <gold_amount>", (x) =>
@@ -67,7 +64,7 @@ public class DebugController : MonoBehaviour
         EXPLODE = new DebugCommand("explode", "Explodes you!", "explode", () =>
         {
             pStats.playerMan.myAnimator.Play("Explode");
-            healthMan.HurtPlayer(500);
+           HealthManager.Instace.HurtPlayer(500);
         }
         );
 
